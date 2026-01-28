@@ -3,7 +3,7 @@
 Dashboard bancaire moderne développé avec **Angular (standalone components)**.  
 Ce projet est une **démo produit** visant à illustrer une architecture Angular propre, une UX réaliste et une visualisation de données avancée.
 
-![Dashboard preview](./screenshots/dashboard.png)
+![Dashboard preview](./docs/screen.png)
 
 ---
 
