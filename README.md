@@ -5,7 +5,6 @@ Ce projet est une **démo produit** visant à illustrer une architecture Angular
 
 ![Dashboard preview](./docs/screen.png)
 
----
 
 ## 🎯 Objectif du projet
 
@@ -17,8 +16,6 @@ L’objectif de ce projet est de servir de **vitrine technique Angular** :
 - proposer une UX proche d’un produit réel
 
 Ce projet n’est **pas un simple CRUD**, mais une démonstration de conception front-end orientée produit.
-
----
 
 ## 🚀 Fonctionnalités
 
@@ -57,8 +54,6 @@ Ce projet n’est **pas un simple CRUD**, mais une démonstration de conception 
 - Export PDF du dashboard
 - Rendu fidèle à l’écran (html2canvas + jsPDF)
 
----
-
 ## 🧠 Architecture
 
 - Angular **Standalone Components**
@@ -67,15 +62,6 @@ Ce projet n’est **pas un simple CRUD**, mais une démonstration de conception 
 - Single Source of Truth
 - Composants UI “dumb”
 - Aucun `subscribe` manuel (async pipe uniquement)
-
-Dashboard
-├─ DashboardDataService (state + filtres)
-├─ LineChartComponent
-├─ BarChartComponent
-└─ TransactionsTable
-
-
----
 
 ## 🛠️ Stack technique
 
@@ -86,8 +72,6 @@ Dashboard
 - html2canvas
 - jsPDF
 - SCSS (dark theme)
-
----
 
 ## ▶️ Lancer le projet
 
