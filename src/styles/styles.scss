@@ -1,0 +1,79 @@
+
+// Learn more about theming and how to use it for your application's
+// custom components at https://material.angular.dev/guide/theming
+@use '@angular/material' as mat;
+@use './colors' as colors;
+
+@include mat.core();
+
+/////// ANGULAR MAT //////
+/// 
+mat-card-title {
+  margin: 10px 10px !important
+}
+mat-card {
+  padding: 1rem;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+mat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--mat-sys-elevation-level4);
+}
+
+////////////////////////
+
+html {
+  height: 100%;
+  @include mat.theme((
+    color: (
+      primary: mat.$cyan-palette,
+      tertiary: mat.$orange-palette,
+    ),
+    typography: Roboto,
+    density: 0,
+  ));
+}
+
+body {
+  color-scheme: dark;
+  background-color: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  font: var(--mat-sys-body-medium);
+  margin: 0;
+  height: 100%;
+}
+
+.textLight {
+  color: var(--text-light);
+}
+
+
+
+.twoColumn {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 20px;
+}
+@media (max-width: 900px) {
+  .twoColumn {
+    grid-template-columns: 1fr;
+  }
+}
+
+.twoRow {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.chartHeader{
+  display: grid;
+  grid-template-columns: 6fr 2fr;
+  gap: 20px;
+}
+
+.periodeFilterToogle{
+  width: 172px;
+  height: 40px;
+  margin-top: 20px;
+}

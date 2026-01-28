@@ -1,0 +1,12 @@
+@use '@angular/material' as mat;
+
+:root {
+  --bank-primary: var(--mat-sys-primary);
+  --bank-primary-light: var(--mat-sys-primary-container);
+  --bank-on-primary: var(--mat-sys-on-primary);
+  --text-light: #17b7b7;
+
+  --chart-primary: rgba(29, 233, 182, 1);
+  --chart-primary-bg: rgba(29, 233, 182, 0.15);
+}
+

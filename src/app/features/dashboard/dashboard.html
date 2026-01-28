@@ -1,0 +1,154 @@
+<div class="dashboard" #pdfContent>
+
+  <!-- Filtre mois -->
+  <section class="dashboard-toolbar">
+   <button
+  mat-stroked-button
+  class="export-btn"
+  (click)="exportPdf()"
+  aria-label="Exporter en PDF"
+>
+  <mat-icon>download</mat-icon>
+</button>
+
+
+    <mat-button-toggle-group class="periodeFilterToogle" [value]="data.periodValue$ | async"
+      (valueChange)="setPeriod($event)" exclusive>
+      <mat-button-toggle [value]="3">3M</mat-button-toggle>
+      <mat-button-toggle [value]="6">6M</mat-button-toggle>
+      <mat-button-toggle [value]="12">12M</mat-button-toggle>
+    </mat-button-toggle-group>
+
+    <mat-button-toggle-group class="monthFilterToggle" [value]="data.monthValue$ | async"
+      (valueChange)="setMonth($event)" exclusive>
+      <mat-button-toggle value="ALL">ALL</mat-button-toggle>
+      <mat-button-toggle *ngFor="let m of data.months$ | async" [value]="m">
+        {{ m }}
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+
+  </section>
+
+  <!-- KPI
+  <section class="kpi">
+    <mat-card *ngFor="let acc of data.accounts$ | async" class="kpi-card expense">
+      <div class="kpi-content">
+        <span class="label">{{ acc.name }}</span>
+        <mat-card-subtitle>{{ acc.iban }}</mat-card-subtitle>
+        <span class="value">
+          {{ acc.balance | number:'1.2-2' }} €
+        </span>
+      </div>
+    </mat-card>
+  </section> -->
+
+  <!-- Revenus / Dépenses -->
+  <section class="accounts">
+
+    <!-- Solde total -->
+    <mat-card class="kpi-card main">
+      <div class="kpi-content">
+        <span class="label">Solde total</span>
+        <span class="value">
+          {{ data.balance$ | async | number:'1.2-2' }} €
+        </span>
+        
+      </div>
+    </mat-card>
+
+    <mat-card class="kpi-card income">
+      <div class="kpi-content color-in">
+        <span class="label">Revenus</span>
+        <span class="value">
+          +{{ data.income$ | async | number:'1.0-0' }} €
+        </span>
+      </div>
+    </mat-card>
+
+    <mat-card class="kpi-card expense">
+      <div class="kpi-content color-out">
+        <span class="label">Dépenses</span>
+        <span class="value">
+          -{{ data.expenses$ | async | number:'1.0-0' }} €
+        </span>
+      </div>
+    </mat-card>
+
+  </section>
+
+  <!-- Charts -->
+  <div class="twoColumn">
+
+    <div class="twoRow">
+
+      <!-- Line chart -->
+      <app-line-chart [transactions]="(data.filteredTransactions$ | async) ?? []">
+      </app-line-chart>
+
+
+      <!-- Bar chart -->
+      <mat-card>
+        <div class="card-header">
+          <div class="chartHeader">
+            <mat-card-title>Last Costs</mat-card-title>
+          </div>
+        </div>
+
+        <app-bart-chart [data]="(data.filteredCashFlow$ | async) ?? []">
+        </app-bart-chart>
+
+      </mat-card>
+    </div>
+
+    <!-- Transactions -->
+    <section class="transactions">
+      <mat-card>
+        <mat-card-title>Dernières transactions</mat-card-title>
+
+        <div class="table-container">
+          <table mat-table [dataSource]="(data.filteredTransactions$ | async) ?? []">
+
+            <!-- Type -->
+            <ng-container matColumnDef="type">
+              <th mat-header-cell *matHeaderCellDef></th>
+              <td mat-cell *matCellDef="let t" class="type-cell">
+                <mat-icon [ngClass]="t.type === 'in' ? 'color-in' : 'color-out'">
+                  {{ t.type === 'in' ? 'trending_up' : 'trending_down' }}
+                </mat-icon>
+              </td>
+            </ng-container>
+
+            <!-- From -->
+            <ng-container matColumnDef="from">
+              <th mat-header-cell *matHeaderCellDef>
+                Émetteur / destinataire
+              </th>
+              <td mat-cell *matCellDef="let t">{{ t.from }}</td>
+            </ng-container>
+
+            <!-- Amount -->
+            <ng-container matColumnDef="amount">
+              <th mat-header-cell *matHeaderCellDef>Montant</th>
+              <td mat-cell *matCellDef="let t" class="amount-cell"
+                [ngClass]="t.type === 'in' ? 'color-in' : 'color-out'">
+                {{ t.amount | number:'1.2-2' }} €
+              </td>
+            </ng-container>
+
+            <!-- Date -->
+            <ng-container matColumnDef="date">
+              <th mat-header-cell *matHeaderCellDef>Date</th>
+              <td mat-cell *matCellDef="let t">{{ t.date }}</td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+          </table>
+        </div>
+      </mat-card>
+    </section>
+
+  </div>
+
+</div>

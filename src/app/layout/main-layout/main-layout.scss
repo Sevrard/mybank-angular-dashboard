@@ -1,0 +1,39 @@
+
+.layout-container {
+  position: relative;
+  min-height: 100vh;
+  background: var(--mat-sys-surface);
+  overflow: hidden;
+}
+.layout-content {
+  position: relative;
+  z-index: 1;
+  padding-top: 50px;
+}
+
+/* Waves */
+.waves {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 30vh;
+  min-height: 120px;
+  max-height: 240px;
+  z-index: 0;
+}
+
+.parallax > use {
+  animation: move-forever 25s cubic-bezier(.55,.5,.45,.5) infinite;
+  fill: var(--mat-sys-primary-container);
+  opacity: 0.4;
+}
+
+@keyframes move-forever {
+  0% {
+    transform: translate3d(-90px, 0, 0);
+  }
+  100% {
+    transform: translate3d(85px, 0, 0);
+  }
+}

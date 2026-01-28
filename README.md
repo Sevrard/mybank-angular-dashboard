@@ -1,59 +1,108 @@
-# BankAngular
+# 🏦 MyBank Dashboard — Angular Demo
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.1.
+Dashboard bancaire moderne développé avec **Angular (standalone components)**.  
+Ce projet est une **démo produit** visant à illustrer une architecture Angular propre, une UX réaliste et une visualisation de données avancée.
 
-## Development server
+![Dashboard preview](./screenshots/dashboard.png)
 
-To start a local development server, run:
+---
 
-```bash
+## 🎯 Objectif du projet
+
+L’objectif de ce projet est de servir de **vitrine technique Angular** :
+
+- démontrer une architecture réactive et maintenable
+- simuler un dashboard bancaire crédible (fintech / SaaS)
+- intégrer des graphiques avancés et synchronisés
+- proposer une UX proche d’un produit réel
+
+Ce projet n’est **pas un simple CRUD**, mais une démonstration de conception front-end orientée produit.
+
+---
+
+## 🚀 Fonctionnalités
+
+### 📊 Dashboard
+- Solde global
+- Revenus et dépenses
+- Variations (%) par rapport à la période précédente
+- Comptes bancaires simulés
+
+### 📈 Visualisation des données
+- **Line chart (Chart.js)**  
+  - solde cumulé
+  - zone positive / négative (vert / rouge)
+  - ligne zéro visible
+- **Bar chart (Chart.js)**  
+  - revenus vs dépenses
+  - empilé
+  - thème dark
+
+### 🔎 Filtres globaux
+- Filtre par période : **3 / 6 / 12 mois**
+- Filtre par mois (toggle group)
+- Synchronisation automatique :
+  - KPI
+  - graphiques
+  - table des transactions
+
+### 📋 Transactions
+- Table Angular Material
+- Scroll interne
+- Header sticky
+- Icônes directionnelles (in / out)
+- Couleurs dynamiques selon le type
+
+### 📄 Export
+- Export PDF du dashboard
+- Rendu fidèle à l’écran (html2canvas + jsPDF)
+
+---
+
+## 🧠 Architecture
+
+- Angular **Standalone Components**
+- Gestion d’état centralisée via `DashboardDataService`
+- **RxJS** (`BehaviorSubject`, `combineLatest`)
+- Single Source of Truth
+- Composants UI “dumb”
+- Aucun `subscribe` manuel (async pipe uniquement)
+
+Dashboard
+├─ DashboardDataService (state + filtres)
+├─ LineChartComponent
+├─ BarChartComponent
+└─ TransactionsTable
+
+
+---
+
+## 🛠️ Stack technique
+
+- Angular (standalone)
+- Angular Material (MDC)
+- RxJS
+- Chart.js
+- html2canvas
+- jsPDF
+- SCSS (dark theme)
+
+---
+
+## ▶️ Lancer le projet
+
+--->Bash
+npm install
 ng serve
-```
+Puis ouvrir dans le navigateur :
+👉 http://localhost:4200
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+📌 Notes
+Les données sont mockées mais réalistes
+Le projet est conçu pour être facilement branché sur une API REST
+L’architecture privilégie la lisibilité et la maintenabilité
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+👤 Auteur
+Stéphane Evrard
+Développeur Angular / Fullstack
+📍 Annecy – Genève
