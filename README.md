@@ -1,6 +1,6 @@
 # 🏦 MyBank Dashboard — Angular Demo
 
-Dashboard bancaire moderne développé avec **Angular (standalone components)**.  
+App bancaire moderne développé avec **Angular (standalone components)**.  
 Ce projet est une **démo produit** visant à illustrer une architecture Angular propre, une UX réaliste et une visualisation de données avancée.
 
 ![Dashboard preview](./docs/screen.png)

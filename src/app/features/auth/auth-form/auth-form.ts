@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 import { MatCardModule } from '@angular/material/card';
@@ -8,9 +8,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
-
 @Component({
-  selector: 'app-login',
+  selector: 'app-auth-form',
   standalone: true,
   imports: [
     CommonModule,
@@ -21,31 +20,22 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatButtonModule,
     MatProgressSpinnerModule
   ],
-  templateUrl: './login.html',
-  styleUrls: ['./login.scss']
+  templateUrl: './auth-form.html',
+  styleUrls: ['./auth-form.scss']
 })
+export class AuthFormComponent {
 
-export class Login {
-  loading = false;
+  @Input() title = '';
+  @Input() subtitle = '';
+  @Input() form!: FormGroup;
+  @Input() loading = false;
+  @Input() showNameFields = false;
+  @Input() submitLabel = 'Valider';
 
-  form;
-
-  constructor(private fb: FormBuilder) {
-    this.form = this.fb.nonNullable.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-    });
-  }
+  @Output() submitForm = new EventEmitter<void>();
 
   submit() {
     if (this.form.invalid || this.loading) return;
-
-    this.loading = true;
-
-    // simulation appel API
-    setTimeout(() => {
-      this.loading = false;
-      console.log('LOGIN OK', this.form.value);
-    }, 1500);
+    this.submitForm.emit();
   }
 }

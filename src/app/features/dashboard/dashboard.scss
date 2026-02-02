@@ -1,3 +1,5 @@
+/* =============================== DASHBOARD =============================== */
+
 .dashboard {
   display: flex;
   flex-direction: column;
@@ -17,6 +19,8 @@
     align-self: center;
   }
 }
+
+/* =============================== EXPORTBTN =============================== */
 
 .export-btn {
   min-width: 42px;
@@ -49,7 +53,8 @@
 }
 
 
-/* KPI */
+/* =============================== KPI =============================== */
+
 .kpi {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -83,14 +88,16 @@
 }
 
 
-/* Accounts */
+/* =============================== ACCOUNT =============================== */
+
 .accounts {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 1rem;
 }
 
-/* Transactions */
+/* =============================== TRANSACTIONS =============================== */
+
 .transactions table {
   width: 100%;
 }
@@ -129,7 +136,8 @@ th.mat-header-cell {
   font-size: 18px;
 }
 
-///////
+
+/* =============================== CHART =============================== */
 
 .graph mat-card {
   padding: 1.5rem;

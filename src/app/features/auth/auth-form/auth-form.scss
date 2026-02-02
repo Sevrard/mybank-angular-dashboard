@@ -1,0 +1,100 @@
+/* =============================== AUTH CONTAINER =============================== */
+
+.signin-container {
+  position: relative;
+  min-height: 85vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+  padding: 1rem;
+}
+
+/* =============================== AUTH CARD =============================== */
+
+.signin-card {
+  position: relative;
+  z-index: 1;
+
+  width: 100%;
+  max-width: 420px;
+  padding: 1.5rem;
+
+  border-radius: 20px;
+  background: var(--mat-sys-surface-container);
+  box-shadow: var(--mat-sys-elevation-level3);
+
+  animation: signin-enter 420ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* =============================== CARD HEADER =============================== */
+
+mat-card-header {
+  margin-bottom: 2rem;
+  text-align: center;
+  justify-content: center;
+
+  mat-card-title {
+    font-weight: 600;
+  }
+
+  mat-card-subtitle {
+    margin-top: 0.25rem;
+    opacity: 0.8;
+  }
+}
+
+/* =============================== FORM =============================== */
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+/* =============================== SUBMIT BUTTON =============================== */
+
+button {
+  margin-top: 0.5rem;
+  height: 48px;
+
+  font: var(--mat-sys-label-large);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+mat-progress-spinner {
+  width: 20px !important;
+  height: 20px !important;
+}
+
+/* =============================== ANIMATION =============================== */
+
+@keyframes signin-enter {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* =============================== RESPONSIVE  =============================== */
+
+@media (max-width: 480px) {
+  .signin-card {
+    padding: 1.25rem;
+    border-radius: 16px;
+  }
+}

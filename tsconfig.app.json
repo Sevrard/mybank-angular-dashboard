@@ -8,7 +8,7 @@
   },
   "include": [
     "src/**/*.ts"
-, "src/app/layout/mainLayout"  ],
+, "src/app/shared/layout/mainLayout"  ],
   "exclude": [
     "src/**/*.spec.ts"
   ]

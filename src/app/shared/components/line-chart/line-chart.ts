@@ -19,7 +19,7 @@ import {
   Tooltip,
   Filler
 } from 'chart.js';
-import { Transaction } from '../../../services/dashboard-data';
+import { Transaction } from '../../../core/models/transaction.model';
 
 Chart.register(
   LineController,

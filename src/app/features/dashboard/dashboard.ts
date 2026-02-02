@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
@@ -8,17 +8,15 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import { ViewChild, ElementRef } from '@angular/core';
-
 
 import { LineChart } from '../../shared/components/line-chart/line-chart';
 import { BarChart } from '../../shared/components/bar-chart/bar-chart';
-import { DashboardDataService } from '../../services/dashboard-data';
-import { MatFormField, MatLabel } from "@angular/material/form-field";
+import { DashboardFakeDataService } from '../../core/services/dashboard-fake-data.service';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush, 
   imports: [
     CommonModule,
     MatCardModule,
@@ -28,9 +26,7 @@ import { MatFormField, MatLabel } from "@angular/material/form-field";
     LineChart,
     BarChart,
     MatFormFieldModule,
-    MatSelectModule,
-    MatFormField,
-    MatLabel
+    MatSelectModule
   ],
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.scss']
@@ -41,36 +37,36 @@ export class Dashboard {
 
   displayedColumns = ['type', 'from', 'amount', 'date'];
 
-  constructor(public data: DashboardDataService) { }
+  constructor(public data: DashboardFakeDataService) { }
 
-  setPeriod(p: number) {
-    this.data.setPeriod(p);
-    this.data.setMonth("ALL");
-  }
-  setMonth(month: string | 'ALL') {
+
+setPeriod(p: string | number) {
+  if (!p) return;
+  const periodNumber = Number(p);
+  console.log("Période reçue :", p);
+  this.data.setPeriod(periodNumber);
+  this.data.setMonth("ALL");
+}
+  setMonth(month: string) {
     this.data.setMonth(month);
   }
 
   exportPdf() {
     const element = this.pdfContent.nativeElement;
 
-    html2canvas(element, {
-      scale: 2,
-      backgroundColor: '#0b0f0e', // ton fond dark
-      useCORS: true
+    html2canvas(element, { 
+      scale: 2, 
+      backgroundColor: '#0b0f0e', 
+      useCORS: true 
     }).then(canvas => {
-
       const imgData = canvas.toDataURL('image/png');
-
-      const pdf = new jsPDF({
-        orientation: 'portrait',
-        unit: 'px',
-        format: 'a4'
-      });
+      const pdf = new jsPDF({ orientation: 'portrait', unit: 'px', format: 'a4'});
+      
       const pageWidth = pdf.internal.pageSize.getWidth();
       const pageHeight = pdf.internal.pageSize.getHeight();
       const imgWidth = pageWidth;
-      const imgHeight = canvas.height * imgWidth / canvas.width;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      
       let heightLeft = imgHeight;
       let position = 0;
 
@@ -87,5 +83,4 @@ export class Dashboard {
       pdf.save(`mybank-dashboard-${new Date().toISOString().slice(0, 10)}.pdf`);
     });
   }
-
 }

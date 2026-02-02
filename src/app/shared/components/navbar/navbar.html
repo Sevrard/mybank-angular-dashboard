@@ -1,25 +1,40 @@
 <mat-toolbar color="primary">
 
   <div class="companyName">
-      <mat-icon class='color-in'>
-        trending_up
-      </mat-icon>
+    <mat-icon class='color-in'>
+      trending_up
+    </mat-icon>
 
     <span class="textLight">My</span>&nbsp;<span> Bank</span>
   </div>
-  
+
   <span class="spacer"></span>
 
   <div class="grid">
+
+    @if (authService.isAuth()) {
     <button mat-button routerLink="/dashboard" routerLinkActive="active">
-    Dashboard
+      Dashboard
     </button>
     <button mat-button routerLink="/accounts" routerLinkActive="active">
       Comptes
     </button>
-    <button mat-button routerLink="/login"routerLinkActive="active">
+        
+
+     <button class="logoutBtn" matButton (click)="authService.logout()" routerLinkActive="active">
+      Deconnexion
+    </button>
+    }
+    @else {
+    <button mat-button routerLink="/login" routerLinkActive="active">
       Login
     </button>
+    <button mat-button routerLink="/signin" routerLinkActive="active">
+      Inscription
+    </button>
+    }
+
+
   </div>
-  
+
 </mat-toolbar>

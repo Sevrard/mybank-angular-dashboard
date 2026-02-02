@@ -1,9 +1,11 @@
 import { Routes } from '@angular/router';
-import { MainLayout } from './layout/main-layout/main-layout';
+import { MainLayout } from './shared/layout/main-layout/main-layout';
 
-import { Login } from './features/auth/login/login';
+import { Login } from './features/auth/login';
+import { Signin } from './features/auth/signin';
 import { Dashboard } from './features/dashboard/dashboard';
 import { Accounts } from './features/accounts/accounts';
+import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -11,9 +13,10 @@ export const routes: Routes = [
     component: MainLayout,
     children: [
       { path: 'login', component: Login },
-      { path: 'dashboard', component: Dashboard },
-      { path: 'accounts', component: Accounts },
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
+      { path: 'signin', component: Signin },
+      { path: 'dashboard', component: Dashboard , canActivate: [authGuard]},
+      { path: 'accounts', component: Accounts ,canActivate: [authGuard]},
+      { path: '', redirectTo: 'login', pathMatch: 'full' }
     ]
   }
 ];

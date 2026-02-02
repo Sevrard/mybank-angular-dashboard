@@ -1,13 +1,10 @@
-
-// Learn more about theming and how to use it for your application's
-// custom components at https://material.angular.dev/guide/theming
 @use '@angular/material' as mat;
 @use './colors' as colors;
 
 @include mat.core();
 
-/////// ANGULAR MAT //////
-/// 
+/* =============================== ANGULAR MAT =============================== */
+
 mat-card-title {
   margin: 10px 10px !important
 }
@@ -20,7 +17,7 @@ mat-card:hover {
   box-shadow: var(--mat-sys-elevation-level4);
 }
 
-////////////////////////
+/* =============================== APP =============================== */
 
 html {
   height: 100%;
@@ -43,11 +40,27 @@ body {
   height: 100%;
 }
 
+
+/* =============================== SHARED =============================== */
+
+.twoRow {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.chartHeader{
+  display: grid;
+  grid-template-columns: 6fr 2fr;
+  gap: 20px;
+}
+.periodeFilterToogle{
+  width: 172px;
+  height: 40px;
+  margin-top: 20px;
+}
 .textLight {
   color: var(--text-light);
 }
-
-
 
 .twoColumn {
   display: grid;
@@ -58,22 +71,4 @@ body {
   .twoColumn {
     grid-template-columns: 1fr;
   }
-}
-
-.twoRow {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.chartHeader{
-  display: grid;
-  grid-template-columns: 6fr 2fr;
-  gap: 20px;
-}
-
-.periodeFilterToogle{
-  width: 172px;
-  height: 40px;
-  margin-top: 20px;
 }
