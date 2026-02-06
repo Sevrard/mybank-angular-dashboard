@@ -1,44 +1,23 @@
-import { Injectable } from '@angular/core';
+import { HttpInterceptorFn, HttpErrorResponse } from '@angular/common/http';
+import { inject } from '@angular/core';
 import { Router } from '@angular/router';
-import {
-  HttpEvent,
-  HttpHandler,
-  HttpInterceptor,
-  HttpRequest,
-  HttpErrorResponse
-} from '@angular/common/http';
-import { Observable, throwError, switchMap, catchError } from 'rxjs';
-import { AuthService } from '../services/auth.service';
+import { catchError, throwError } from 'rxjs';
 
-@Injectable()
-export class AuthInterceptor implements HttpInterceptor {
+export const authInterceptor: HttpInterceptorFn = (req, next) => {
+  const router = inject(Router);
+  const token = localStorage.getItem('access_token');
 
-  constructor(private router: Router) {}
+  const authReq = token 
+    ? req.clone({ setHeaders: { Authorization: `Bearer ${token}` } }) 
+    : req;
 
-  intercept(req: HttpRequest<any>, next: HttpHandler) {
-    const token = localStorage.getItem('token');
-
-    const authReq = token
-      ? req.clone({
-          setHeaders: {
-            Authorization: `Bearer ${token}`
-          }
-        })
-      : req;
-
-    return next.handle(authReq).pipe(
-      catchError(err => {
-        if (err.status === 401) {
-          this.logout();
-        }
-        return throwError(() => err);
-      })
-    );
-  }
-
-  private logout() {
-    localStorage.removeItem('token');
-    this.router.navigate(['/login']);
-  }
-}
-
+  return next(authReq).pipe(
+    catchError((err: HttpErrorResponse) => {
+      if (err.status === 401) {
+        localStorage.clear(); 
+        router.navigate(['/login']);
+      }
+      return throwError(() => err);
+    })
+  );
+};

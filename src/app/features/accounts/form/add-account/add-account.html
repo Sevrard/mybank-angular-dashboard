@@ -1,0 +1,25 @@
+<form [formGroup]="accountForm" (ngSubmit)="onSubmit()" class="add-account-form">
+  <div class="form-container">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Type de compte</mat-label>
+      <mat-select formControlName="accountType">
+        <mat-option value="Compte Courant">Compte Courant</mat-option>
+        <mat-option value="Livret d'Épargne">Livret d'Épargne</mat-option>
+        <mat-option value="Compte Crypto">Compte Crypto</mat-option>
+      </mat-select>
+    </mat-form-field>
+    
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Solde initial</mat-label>
+      <input matInput type="number" step="0.01" placeholder="0.00" formControlName="initialBalance">
+      <span matSuffix>€&nbsp;</span>
+    </mat-form-field>
+
+    <div class="form-actions">
+      <button mat-button type="button" (click)="onCancel()">Annuler</button>
+      <button mat-flat-button color="primary" type="submit" [disabled]="accountForm.invalid">
+        Créer le compte
+      </button>
+    </div>
+  </div>
+</form>

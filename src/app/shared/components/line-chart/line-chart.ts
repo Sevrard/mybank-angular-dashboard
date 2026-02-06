@@ -9,6 +9,7 @@ import {
   SimpleChanges
 } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
+
 import {
   Chart,
   LineController,
@@ -87,25 +88,22 @@ export class LineChart implements AfterViewInit, OnDestroy, OnChanges {
               const chart = ctx.chart;
               const { ctx: c, chartArea, scales } = chart;
 
-              if (!chartArea) return;
+              if (!chartArea || !scales['y']) return;
 
               const yScale = scales['y'];
               const zeroY = yScale.getPixelForValue(0);
 
-              const gradient = c.createLinearGradient(
-                0,
-                chartArea.top,
-                0,
-                chartArea.bottom
-              );
+              const gradient = c.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
 
-              const zeroPos =
-                (zeroY - chartArea.top) / (chartArea.bottom - chartArea.top);
+              // Sécurité : On contraint la valeur entre 0 et 1
+              const rawZeroPos = (zeroY - chartArea.top) / (chartArea.bottom - chartArea.top);
+              const zeroPos = Math.max(0, Math.min(1, rawZeroPos));
 
-              gradient.addColorStop(0, 'rgba(29,233,182,0.35)');
-              gradient.addColorStop(Math.max(0, zeroPos - 0.01), 'rgba(29,233,182,0.15)');
-              gradient.addColorStop(Math.min(1, zeroPos + 0.01), 'rgba(239,68,68,0.15)');
-              gradient.addColorStop(1, 'rgba(239,68,68,0.35)');
+              // On utilise zeroPos pour le dégradé sans risque d'erreur
+              gradient.addColorStop(0, 'rgba(29,233,182,0.35)'); // Vert en haut
+              gradient.addColorStop(zeroPos, 'rgba(29,233,182,0.05)'); // Transition douce au zéro
+              gradient.addColorStop(zeroPos, 'rgba(239,68,68,0.05)');   // Transition douce au zéro
+              gradient.addColorStop(1, 'rgba(239,68,68,0.35)');   // Rouge en bas
 
               return gradient;
             }

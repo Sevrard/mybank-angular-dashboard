@@ -53,7 +53,7 @@ export class BarChart implements AfterViewInit, OnDestroy, OnChanges {
     const arrivalColor =
       styles.getPropertyValue('--chart-primary').trim() || '#5b3df5';
 
-    const spendingColor = '#ff8779';
+    const spendingColor = '#e65f5d';
 
     this.chart = new Chart(this.canvas.nativeElement, {
       type: 'bar',

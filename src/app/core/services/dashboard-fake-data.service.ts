@@ -109,34 +109,34 @@ export class DashboardFakeDataService {
     // ===========================
     private generateYearTransactions(): Transaction[] {
         const result: Transaction[] = [];
-        let salary = 2800;
+        let salary = 2500;
 
         MONTHS.forEach((month, i) => {
             const bonus = Math.random() > 0.75 ? 200 + Math.random() * 300 : 0;
 
             // Dépenses spécifiques
             if (month === "Mar") result.push({ label: 'Immobilier', amount: -6000, type: 'out', from: 'Guimmo', date: `25/${i + 1}/2025`, month });
-            if (month === "Jun") result.push({ label: 'Voiture', amount: -5000, type: 'out', from: 'Citroen', date: `25/${i + 1}/2025`, month });
+            if (month === "Jun") result.push({ label: 'Voiture', amount: -3000, type: 'out', from: 'Citroen', date: `25/${i + 1}/2025`, month });
             if (month === "Aug") {
-                result.push({ label: 'Voyage', amount: -2500, type: 'out', from: 'Airfrance', date: `25/${i + 1}/2025`, month });
-                result.push({ label: 'Voyage', amount: -1500, type: 'out', from: 'Hotel-L', date: `25/${i + 1}/2025`, month });
+                result.push({ label: 'Loisir', amount: -2500, type: 'out', from: 'Airfrance', date: `25/${i + 1}/2025`, month });
+                result.push({ label: 'Loisir', amount: -1500, type: 'out', from: 'Hotel-L', date: `25/${i + 1}/2025`, month });
             }
             if (month === "Dec") {
                 result.push({ label: 'Impot', amount: -2500, type: 'out', from: 'Impot.gouv', date: `25/${i + 1}/2025`, month });
-                result.push({ label: 'Noel', amount: -1000, type: 'out', from: 'Cadeaux', date: `25/${i + 1}/2025`, month });
+                result.push({ label: 'Loisir', amount: -1000, type: 'out', from: 'Cadeaux', date: `25/${i + 1}/2025`, month });
             }
 
             // Revenus et charges fixes
             result.push({ label: bonus ? 'Salaire + Bonus' : 'Salaire', amount: salary + bonus, type: 'in', from: 'Entreprise ABC SAS', date: `25/${i + 1}/2025`, month });
-            result.push({ label: 'Loyer', amount: -950, type: 'out', from: 'Agence Immobilière Dupont', date: `03/${i + 1}/2025`, month });
-            result.push({ label: 'Courses', amount: -(120 + Math.random() * 120), type: 'out', from: 'Supermarché', date: `12/${i + 1}/2025`, month });
+            result.push({ label: 'Loyer', amount: -750, type: 'out', from: 'Agence Immobilière Dupont', date: `03/${i + 1}/2025`, month });
+            result.push({ label: 'Courses', amount: -(120 + Math.random() * 200), type: 'out', from: 'Supermarché', date: `12/${i + 1}/2025`, month });
 
             const electricity = i >= 10 || i <= 2 ? 90 + Math.random() * 40 : 60 + Math.random() * 20;
-            result.push({ label: 'Électricité', amount: -electricity, type: 'out', from: 'EDF', date: `15/${i + 1}/2025`, month });
-            result.push({ label: 'Netflix', amount: -15.99, type: 'out', from: 'Netflix', date: `18/${i + 1}/2025`, month });
+            result.push({ label: 'Charges', amount: -electricity, type: 'out', from: 'EDF', date: `15/${i + 1}/2025`, month });
+            result.push({ label: 'Loisir', amount: -15.99, type: 'out', from: 'Loisir', date: `18/${i + 1}/2025`, month });
 
             if (Math.random() > 0.4) {
-                result.push({ label: 'Restaurant / Loisirs', amount: -(30 + Math.random() * 70), type: 'out', from: 'Divers', date: `22/${i + 1}/2025`, month });
+                result.push({ label: 'Loisir', amount: -(30 + Math.random() * 70), type: 'out', from: 'Divers', date: `22/${i + 1}/2025`, month });
             }
         });
 

@@ -1,0 +1,61 @@
+// src/styles/_forms.scss
+
+// Classe à appliquer sur la balise <form>
+.bank-form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 10px 0;
+
+  .full-width {
+    width: 100%;
+  }
+
+  // Overrides Material pour le Dark Mode (ton style AddAccount)
+  mat-form-field {
+    width: 100%;
+    
+    ::ng-deep {
+      .mdc-text-field--outlined {
+        background-color: rgba(255, 255, 255, 0.03) !important;
+      }
+      .mdc-notched-outline__breadcrumb { color: rgba(255, 255, 255, 0.7); }
+    }
+  }
+
+  .iban-preview {
+    font-size: 13px;
+    color: #2CD4BF;
+    padding: 0 16px 15px;
+    margin-top: -10px;
+  }
+
+  // Barre d'actions en bas (Annuler / Confirmer)
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 16px;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+    .btn-cancel {
+      color: #2CD4BF;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-weight: 500;
+      &:hover { text-decoration: underline; }
+    }
+
+    .btn-submit {
+      background-color: #2CD4BF !important;
+      color: #0b0f0e !important;
+      font-weight: 600;
+      border-radius: 25px !important;
+      padding: 0 30px !important;
+      height: 45px;
+    }
+  }
+}

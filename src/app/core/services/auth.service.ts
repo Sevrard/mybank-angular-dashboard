@@ -15,9 +15,10 @@ export class AuthService {
     constructor(private http: HttpClient,private router: Router) { }
 
     login(email: string, password: string) {
-        return this.http.post<{ token: string }>(`${this.API}/auth/login`, { email, password }).pipe(
+        return this.http.post<{ token: string, userId:string }>(`${this.API}/auth/login`, { email, password }).pipe(
             tap(response => {
                 localStorage.setItem(this.TOKEN_KEY, response.token);
+                localStorage.setItem("userId", response.userId);
                 this._isAuthenticated.set(true);
             }),
             catchError(err => {

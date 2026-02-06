@@ -1,0 +1,27 @@
+.add-account-form {
+  padding-top: 10px;
+
+  .full-width {
+    width: 100%;
+    margin-bottom: 12px;
+  }
+
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  ::ng-deep .mat-mdc-text-field-wrapper {
+    background-color: rgba(255, 255, 255, 0.03) !important;
+  }
+  
+  button[mat-flat-button] {
+    background-color: #1de9b6; 
+    color: #000;
+    font-weight: 600;
+  }
+}

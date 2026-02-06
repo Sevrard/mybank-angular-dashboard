@@ -1,0 +1,54 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="bank-form-container">
+  
+  <div class="form-body">
+    <mat-form-field appearance="outline">
+      <mat-label>{{ mode() === 'DEBIT' ? 'Type de transaction' : 'Nature du dépôt' }}</mat-label>
+      <mat-select formControlName="typeTransaction">
+        @for (cat of categories(); track cat.value) {
+          <mat-option [value]="cat.value">{{ cat.label }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <div class="recipient-section">
+      <mat-form-field appearance="outline">
+        <mat-label>
+          {{ mode() === 'DEBIT' ? 'Virement vers mes comptes' : 'Provient d\'un de mes comptes' }}
+        </mat-label>
+        <mat-select formControlName="internalAccount" (selectionChange)="onInternalAccountChange($event.value)">
+          <mat-option [value]="null">
+            -- {{ mode() === 'DEBIT' ? 'Autre destinataire (Externe)' : 'Source externe (Autre IBAN)' }} --
+          </mat-option>
+          @for (acc of otherAccounts(); track acc.id) {
+            <mat-option [value]="acc.id">
+              {{ acc.name }} ({{ acc.iban }})
+            </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      @if (!form.get('internalAccount')?.value) {
+        <div class="iban-preview">
+          {{ mode() === 'DEBIT' ? 'Destinataire' : 'Source' }} : 
+          <strong>{{ form.get('iban')?.value || 'Non renseigné' }}</strong>
+        </div>
+      }
+    </div>
+
+    <mat-form-field appearance="outline">
+      <mat-label>
+        {{ mode() === 'DEBIT' ? 'Montant à débiter' : 'Montant à créditer' }}
+      </mat-label>
+      <input matInput type="number" formControlName="amount" placeholder="0.00">
+      <span matSuffix style="margin-right: 10px">€</span>
+    </mat-form-field>
+  </div>
+
+  <div class="form-actions">
+    <button mat-button type="button" class="btn-cancel" (click)="onCancel()">Annuler</button>
+    <button mat-flat-button type="submit" class="btn-submit" [disabled]="form.invalid">
+      Confirmer le {{ mode() === 'DEBIT' ? 'virement' : 'crédit' }}
+    </button>
+  </div>
+
+</form>

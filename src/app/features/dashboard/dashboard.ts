@@ -38,15 +38,14 @@ export class Dashboard {
   displayedColumns = ['type', 'from', 'amount', 'date'];
 
   constructor(public data: DashboardFakeDataService) { }
+  
+  setPeriod(p: string | number) {
+    if (!p) return;
+    const periodNumber = Number(p);
+    this.data.setPeriod(periodNumber);
+    this.data.setMonth("ALL");
+  }
 
-
-setPeriod(p: string | number) {
-  if (!p) return;
-  const periodNumber = Number(p);
-  console.log("Période reçue :", p);
-  this.data.setPeriod(periodNumber);
-  this.data.setMonth("ALL");
-}
   setMonth(month: string) {
     this.data.setMonth(month);
   }

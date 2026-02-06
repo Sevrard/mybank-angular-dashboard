@@ -1,2 +1,71 @@
-<h2>Mes comptes</h2>
-<p>Liste des comptes bancaires</p>
+<div class="accounts-page">
+  <header class="page-title">
+    <h1>Mes comptes bancaires</h1>
+    <div (click)="openModal('add',null)" class="add-account">
+      <mat-icon>add</mat-icon>
+      <h3> Ajouter un compte </h3>
+    </div>
+  </header>
+
+  <div class="cards-stack">
+
+    @for (account of accounts(); track account.id) {
+    <mat-card class="account-card">
+
+      <div class="account-grid">
+
+        <div class="info-column">
+          <div class="acc-header">
+            <div class="icon-wrapper">
+              <mat-icon>account_balance</mat-icon>
+            </div>
+            <div class="acc-titles">
+              <h3>{{ account.name }}</h3>
+              <span class="iban-text">{{ account.iban }}</span>
+              <span class="iban-text">{{ account.bic }}</span>
+            </div>
+          </div>
+
+          <div class="balance-section">
+            <label>Solde actuel</label>
+            <div class="balance-value">{{ account.balance | number:'1.2-2' }} €</div>
+          </div>
+        </div>
+
+        <div class="action-column">
+          <div (click)="openModal('credit', account.id)" class="action-row">
+            <div class="icon-wrapper">
+              <mat-icon>arrow_downward</mat-icon>
+            </div>
+            <div>Alimenter mon compte </div>
+          </div>
+          <div (click)="openModal('debit', account.id)" class="action-row">
+            <div class="icon-wrapper">
+              <mat-icon>arrow_upward</mat-icon>
+            </div>
+            <div>Envoyer de l'argent </div>
+          </div>
+          <div class="action-row">
+            <div class="icon-wrapper">
+              <mat-icon>credit_card</mat-icon>
+            </div>
+            <div class="hoverGreen"> Carte et Iban</div>
+          </div>
+           <div (click)="onDeleteAccount(account.id)" class="action-row delete-action">
+            <div class="icon-wrapper">
+              <mat-icon>delete</mat-icon>
+            </div>
+            <div class="hoverRed"> Supprimer</div>
+          </div>
+        </div>
+
+        <div class="chart-column">
+          <app-polar-chart [labels]="polarData().labels" [data]="polarData().values">
+          </app-polar-chart>
+        </div>
+
+      </div>
+    </mat-card>
+    }
+  </div>
+</div>
