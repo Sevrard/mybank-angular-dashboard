@@ -9,16 +9,12 @@
 
 Application web fullstack de gestion financière avec dashboard interactif, développée avec une architecture moderne et auto-hébergée.
 
-🔗 **Demo live** : https://demo.fuky.synology.me
-🔗 **Backend repo** : https://github.com/Sevrard/mybank-Spring-boot-API
+* 🔗 **Demo live** : https://demo.fuky.synology.me
+* 🔗 **Backend repo** : https://github.com/Sevrard/mybank-Spring-boot-API
 
----
-
-## 🎥 Preview
 
 ![Dashboard preview](./docs/screen.png)
 
----
 
 ## 🚀 Stack technique
 
@@ -46,7 +42,6 @@ Application web fullstack de gestion financière avec dashboard interactif, dév
 * Reverse proxy (accès externe)
 * HTTPS
 
----
 
 ## 🔐 Authentification
 
@@ -55,7 +50,6 @@ Application web fullstack de gestion financière avec dashboard interactif, dév
 * Protection des routes backend
 * Intercepteurs Angular pour injection automatique du token
 
----
 
 ## 📊 Fonctionnalités
 
@@ -67,7 +61,6 @@ Application web fullstack de gestion financière avec dashboard interactif, dév
 * 🎨 Thèmes dynamiques (light / dark + palettes custom)
 * ⚡ UI moderne type fintech
 
----
 
 ## 🌐 Intégration APIs externes
 
@@ -82,7 +75,6 @@ Mise en place d’un **proxy backend** pour interroger des APIs externes :
 * Sécurise les clés API
 * Centralise la logique backend
 
----
 
 ## 🎨 Theming
 
@@ -98,7 +90,6 @@ Système de thème avancé basé sur :
 * mode sombre / clair
 * cohérence design globale
 
----
 
 ## 🏗️ Architecture
 
@@ -112,8 +103,6 @@ PostgreSQL (Docker)
 + Proxy backend → APIs externes (Binance / Yahoo)
 ```
 
----
-
 ## ⚙️ Lancement du projet
 
 
@@ -123,8 +112,6 @@ npm install
 npm run dev
 ```
 
----
-
 ## 🔥 Points clés
 
 * Architecture **fullstack complète**
@@ -133,7 +120,6 @@ npm run dev
 * Intégration **APIs financières**
 * Approche **DevOps (NAS + Docker + proxy)**
 
----
 
 ## 📌 Roadmap
 
@@ -143,7 +129,6 @@ npm run dev
 * [ ] Export CSV / PDF
 * [ ] PWA / mobile
 
----
 
 ## 👨‍💻 Auteur
 
