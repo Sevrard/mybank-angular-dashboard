@@ -1,0 +1,86 @@
+// src/styles/_palettes.scss
+@use '@angular/material' as mat;
+
+// Palette INDIGO (Pour Dark & Light)
+$indigo: (
+  50: #e8eaf6, 100: #c5cae9, 200: #9fa8da, 300: #7986cb, 400: #5c6bc0,
+  500: #3f51b5, 600: #3949ab, 700: #303f9f, 800: #283593, 900: #1a237e,
+  A100: #8c9eff, A200: #536dfe, A400: #3d5afe, A700: #304ffe,
+  contrast: (
+    50: black, 100: black, 200: black, 300: white, 400: white,
+    500: white, 600: white, 700: white, 800: white, 900: white,
+    A100: black, A200: white, A400: white, A700: white,
+  )
+);
+
+// Palette PINK
+$pink: (
+  50: #fce4ec, 100: #f8bbd0, 200: #f48fb1, 300: #f06292, 400: #ec407a,
+  500: #e91e63, 600: #d81b60, 700: #c2185b, 800: #ad1457, 900: #880e4f,
+  A100: #ff80ab, A200: #ff4081, A400: #f50057, A700: #c51162,
+  contrast: (
+    50: black, 100: black, 200: black, 300: black, 400: black,
+    500: white, 600: white, 700: white, 800: white, 900: white,
+    A100: black, A200: white, A400: white, A700: white,
+  )
+);
+
+// Palette DEEP PURPLE
+$deep-purple: (
+  50: #ede7f6, 100: #d1c4e9, 200: #b39ddb, 300: #9575cd, 400: #7e57c2,
+  500: #673ab7, 600: #5e35b1, 700: #512da8, 800: #4527a0, 900: #311b92,
+  A100: #b388ff, A200: #7c4dff, A400: #651fff, A700: #6200ea,
+  contrast: (
+    50: black, 100: black, 200: black, 300: white, 400: white,
+    500: white, 600: white, 700: white, 800: white, 900: white,
+    A100: black, A200: white, A400: white, A700: white,
+  )
+);
+
+// Palette AMBER
+$amber: (
+  50: #fff8e1, 100: #ffecb3, 200: #ffe082, 300: #ffd54f, 400: #ffca28,
+  500: #ffc107, 600: #ffb300, 700: #ffa000, 800: #ff8f00, 900: #ff6f00,
+  A100: #ffe57f, A200: #ffd740, A400: #ffc400, A700: #ffab00,
+  contrast: (
+    50: black, 100: black, 200: black, 300: black, 400: black,
+    500: black, 600: black, 700: black, 800: black, 900: black,
+    A100: black, A200: black, A400: black, A700: black,
+  )
+);
+
+// Palette PURPLE
+$purple: (
+  50: #f3e5f5, 100: #e1bee7, 200: #ce93d8, 300: #ba68c8, 400: #ab47bc,
+  500: #9c27b0, 600: #8e24aa, 700: #7b1fa2, 800: #6a1b9a, 900: #4a148c,
+  A100: #ea80fc, A200: #e040fb, A400: #d500f9, A700: #aa00ff,
+  contrast: (
+    50: black, 100: black, 200: black, 300: white, 400: white,
+    500: white, 600: white, 700: white, 800: white, 900: white,
+    A100: black, A200: white, A400: white, A700: white,
+  )
+);
+
+// Palette GREEN
+$green: (
+  50: #e8f5e9, 100: #c8e6c9, 200: #a5d6a7, 300: #81c784, 400: #66bb6a,
+  500: #4caf50, 600: #43a047, 700: #388e3c, 800: #2e7d32, 900: #1b5e20,
+  A100: #b9f6ca, A200: #69f0ae, A400: #00e676, A700: #00c853,
+  contrast: (
+    50: black, 100: black, 200: black, 300: black, 400: black,
+    500: white, 600: white, 700: white, 800: white, 900: white,
+    A100: black, A200: black, A400: black, A700: black,
+  )
+);
+
+// Palette BLUE GREY
+$blue-grey: (
+  50: #eceff1, 100: #cfd8dc, 200: #b0bec5, 300: #90a4ae, 400: #78909c,
+  500: #607d8b, 600: #546e7a, 700: #455a64, 800: #37474f, 900: #263238,
+  A100: #cfd8dc, A200: #b0bec5, A400: #78909c, A700: #455a64,
+  contrast: (
+    50: black, 100: black, 200: black, 300: black, 400: white,
+    500: white, 600: white, 700: white, 800: white, 900: white,
+    A100: black, A200: black, A400: white, A700: white,
+  )
+);

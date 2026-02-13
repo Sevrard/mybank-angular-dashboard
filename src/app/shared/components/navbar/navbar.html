@@ -1,40 +1,56 @@
-<mat-toolbar color="primary">
+<mat-toolbar class="app-navbar">
 
-  <div class="companyName">
-    <mat-icon class='color-in'>
-      trending_up
-    </mat-icon>
-
-    <span class="textLight">My</span>&nbsp;<span> Bank</span>
+  <div class="companyName" routerLink="/">
+    <mat-icon class="logo-icon">trending_up</mat-icon>
+    <span class="brand-highlight">My</span>
+    <span class="brand-text">Bank</span>
   </div>
+
+  <button mat-icon-button [matMenuTriggerFor]="themeMenu" aria-label="Changer de thème" class="theme-trigger">
+    <mat-icon>
+      {{ themeService.activeTheme().isDark ? 'dark_mode' : 'light_mode' }}
+    </mat-icon>
+  </button>
+
+  <mat-menu #themeMenu="matMenu">
+    @for (theme of themeService.availableThemes; track theme.name) {
+    <button mat-menu-item (click)="themeService.setTheme(theme.name)">
+      <mat-icon class="menu-icon">
+        {{ theme.name === themeService.activeTheme().name ? 'radio_button_checked' : 'radio_button_unchecked' }}
+      </mat-icon>
+      <div class="theme-row">
+        <span class="theme-name">{{ theme.displayName }}</span>
+        <div class="color-bubbles">
+          <div class="bubble" [style.background]="theme.colors.primary"></div>
+          <div class="bubble" [style.background]="theme.colors.accent"></div>
+        </div>
+      </div>
+    </button>
+    }
+  </mat-menu>
 
   <span class="spacer"></span>
 
-  <div class="grid">
-
+  <div class="nav-links">
     @if (authService.isAuth()) {
-    <button mat-button routerLink="/dashboard" routerLinkActive="active">
+    <a mat-button routerLink="/dashboard" routerLinkActive="active-link">
       Dashboard
-    </button>
-    <button mat-button routerLink="/accounts" routerLinkActive="active">
+    </a>
+    <a mat-button routerLink="/invest" routerLinkActive="active-link">
+      Investissement
+    </a>
+    <a mat-button routerLink="/accounts" routerLinkActive="active-link">
       Comptes
-    </button>
-        
+    </a>
 
-     <button class="logoutBtn" matButton (click)="authService.logout()" routerLinkActive="active">
-      Deconnexion
+    <button mat-stroked-button color="warn" (click)="authService.logout()" class="logout-btn">
+      Déconnexion
     </button>
     }
     @else {
-    <button mat-button routerLink="/login" routerLinkActive="active">
-      Login
-    </button>
-    <button mat-button routerLink="/signin" routerLinkActive="active">
-      Inscription
-    </button>
+    <a mat-button routerLink="/login" routerLinkActive="active-link">Login</a>
+    <a mat-raised-button color="accent" routerLink="/signin">Inscription</a>
     }
-
-
   </div>
 
 </mat-toolbar>

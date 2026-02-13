@@ -1,0 +1,161 @@
+/* =============================== PAGE ================================ */
+.investment-page {
+  background: var(--mat-bg); // Dynamique
+  color: var(--mat-text);    // Dynamique
+  padding: 24px 32px;
+   max-width: 1600px;
+   display: flex;
+   flex-direction: column;
+   margin: 0 auto;
+}
+
+.investment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+
+  h1 {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--mat-text);
+  }
+
+  .timeframes {
+    display: flex;
+    gap: 8px;
+
+    button {
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: transparent;
+      border: 1px solid var(--mat-divider);
+      color: var(--mat-text-sec);
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &.active {
+        background: var(--mat-accent);
+        color: var(--mat-bg); 
+        border-color: transparent;
+      }
+
+      &:hover:not(.active) {
+        border-color: var(--mat-accent);
+        color: var(--mat-accent);
+        background: var(--mat-accent-soft); 
+      }
+    }
+  }
+}
+
+.metals-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 18px;
+  margin-bottom: 36px;
+}
+
+.metal-card {
+  background: var(--mat-card); 
+  border-radius: 16px;
+  padding: 18px;
+  border: 1px solid var(--mat-divider);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+
+  h4 {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--mat-text-sec);
+    margin-bottom: 10px;
+  }
+
+  .price {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--mat-text);
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .trend {
+    font-size: 14px;
+    font-weight: 500;
+
+    &.positive {
+      color: var(--mat-valid);
+    }
+
+    &.negative {
+      color: var(--mat-warn);
+    }
+  }
+}
+
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+  gap: 24px;
+}
+
+.chart-card {
+  background: var(--mat-card);
+  border-radius: 18px;
+  padding: 18px;
+  border: 1px solid var(--mat-divider);
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+
+  h3 {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--mat-text);
+  }
+
+  .fake-actions {
+    display: flex;
+    gap: 6px;
+
+    button {
+      padding: 4px 12px;
+      font-size: 12px;
+      border-radius: 8px;
+      background: transparent;
+      border: 1px solid var(--mat-divider);
+      color: var(--mat-text-sec);
+      cursor: default;
+
+      &:hover {
+        border-color: var(--mat-accent);
+        color: var(--mat-accent);
+      }
+    }
+  }
+}
+
+.chart-placeholder {
+  height: 220px;
+  border-radius: 14px;
+  background: radial-gradient(
+    circle at top,
+    var(--mat-accent-soft),
+    transparent 75%
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--mat-text-sec);
+  font-size: 14px;
+}
+
+@media (max-width: 900px) {
+  .charts-grid {
+    grid-template-columns: 1fr;
+  }
+}

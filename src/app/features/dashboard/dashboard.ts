@@ -8,9 +8,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-
-import { LineChart } from '../../shared/components/line-chart/line-chart';
-import { BarChart } from '../../shared/components/bar-chart/bar-chart';
+import { periodFilter } from '../../shared/components/flters/periodFilter';
+import { MonthFilter } from '../../shared/components/flters/monthFilter';
+import { LineChart } from '../../shared/components/charts/line-chart/line-chart';
+import { BarChart } from '../../shared/components/charts/bar-chart/bar-chart';
 import { DashboardFakeDataService } from '../../core/services/dashboard-fake-data.service';
 
 @Component({
@@ -26,7 +27,9 @@ import { DashboardFakeDataService } from '../../core/services/dashboard-fake-dat
     LineChart,
     BarChart,
     MatFormFieldModule,
-    MatSelectModule
+    MatSelectModule,
+    periodFilter,
+    MonthFilter
   ],
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.scss']
@@ -38,17 +41,7 @@ export class Dashboard {
   displayedColumns = ['type', 'from', 'amount', 'date'];
 
   constructor(public data: DashboardFakeDataService) { }
-  
-  setPeriod(p: string | number) {
-    if (!p) return;
-    const periodNumber = Number(p);
-    this.data.setPeriod(periodNumber);
-    this.data.setMonth("ALL");
-  }
 
-  setMonth(month: string) {
-    this.data.setMonth(month);
-  }
 
   exportPdf() {
     const element = this.pdfContent.nativeElement;

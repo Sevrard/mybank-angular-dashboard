@@ -1,12 +1,46 @@
-@use '@angular/material' as mat;
+/////////////////////// ******  PRINCIPALES  ****** ////////////////////////
 
-:root {
-  --bank-primary: var(--mat-sys-primary);
-  --bank-primary-light: var(--mat-sys-primary-container);
-  --bank-on-primary: var(--mat-sys-on-primary);
-  --text-light: #17b7b7;
+// --mat-sys-on-primary
+// --mat-sys-primary-container
+// --mat-sys-on-primary-container
 
-  --chart-primary: rgba(29, 233, 182, 1);
-  --chart-primary-bg: rgba(29, 233, 182, 0.15);
-}
+// --mat-sys-secondary
+// --mat-sys-on-secondary
+// --mat-sys-secondary-container
+// --mat-sys-on-secondary-container
 
+// --mat-sys-tertiary
+// --mat-sys-on-tertiary
+// --mat-sys-tertiary-container
+// --mat-sys-on-tertiary-container
+
+
+/////////////////////// ******  Background & Surface (les plus importants  ****** ////////////////////////
+
+// --mat-sys-background
+// --mat-sys-on-background
+
+// --mat-sys-surface
+// --mat-sys-on-surface
+
+// --mat-sys-surface-variant
+// --mat-sys-on-surface-variant
+
+// --mat-sys-inverse-surface
+// --mat-sys-inverse-on-surface
+
+
+/////////////////////// ******  Outline / Borders  ****** ////////////////////////
+
+// --mat-sys-outline
+// --mat-sys-outline-variant
+
+
+/////////////////////// ******  Elevation olbre  ****** ////////////////////////
+
+// --mat-sys-elevation-level0
+// --mat-sys-elevation-level1
+// --mat-sys-elevation-level2
+// --mat-sys-elevation-level3
+// --mat-sys-elevation-level4
+// --mat-sys-elevation-level5

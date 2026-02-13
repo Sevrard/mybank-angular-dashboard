@@ -2,11 +2,14 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, switchMap, tap } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop'; 
+import { environment } from '../../../environments/environment';
+
 
 @Injectable({ providedIn: 'root' })
 export class AccountService {
   private http = inject(HttpClient);
-  private readonly API_URL = 'http://localhost:8080/accounts';
+  private apiUrl = environment.apiUrl;
+  private readonly API_URL = this.apiUrl+'/accounts';
   
   private refresh$ = new BehaviorSubject<void>(undefined);
 
