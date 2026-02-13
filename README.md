@@ -1,92 +1,152 @@
-# 🏦 MyBank Dashboard — Angular Demo
+# 💰 MyBank
 
-App bancaire moderne développé avec **Angular (standalone components)**.  
-Ce projet est une **démo produit** visant à illustrer une architecture Angular propre, une UX réaliste et une visualisation de données avancée.
+![Angular](https://img.shields.io/badge/Angular-17-red)
+![Spring Boot](https://img.shields.io/badge/SpringBoot-API-green)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Docker-blue)
+![JWT](https://img.shields.io/badge/Auth-JWT-orange)
+![Status](https://img.shields.io/badge/Status-Active-brightgreen)
+![License](https://img.shields.io/badge/License-Personal-lightgrey)
+
+Application web fullstack de gestion financière avec dashboard interactif, développée avec une architecture moderne et auto-hébergée.
+
+🔗 **Demo live** : https://demo.fuky.synology.me
+🔗 **Backend repo** : https://github.com/Sevrard/mybank-Spring-boot-API
+
+---
+
+## 🎥 Preview
 
 ![Dashboard preview](./docs/screen.png)
 
+---
 
-## 🎯 Objectif du projet
+## 🚀 Stack technique
 
-L’objectif de ce projet est de servir de **vitrine technique Angular** :
+### 🖥️ Frontend
 
-- démontrer une architecture réactive et maintenable
-- simuler un dashboard bancaire crédible (fintech / SaaS)
-- intégrer des graphiques avancés et synchronisés
-- proposer une UX proche d’un produit réel
+* Angular (Vite)
+* Angular Material (theming dynamique)
+* SCSS (design system custom + mixins)
+* Charts (visualisation des données)
 
-Ce projet n’est **pas un simple CRUD**, mais une démonstration de conception front-end orientée produit.
+### ⚙️ Backend
 
-## 🚀 Fonctionnalités
+* Java / Spring Boot
+* API REST sécurisée
+* Authentification JWT
 
-### 📊 Dashboard
-- Solde global
-- Revenus et dépenses
-- Variations (%) par rapport à la période précédente
-- Comptes bancaires simulés
+### 🗄️ Base de données
 
-### 📈 Visualisation des données
-- **Line chart (Chart.js)**  
-  - solde cumulé
-  - zone positive / négative (vert / rouge)
-  - ligne zéro visible
-- **Bar chart (Chart.js)**  
-  - revenus vs dépenses
-  - empilé
-  - thème dark
+* PostgreSQL (Docker)
 
-### 🔎 Filtres globaux
-- Filtre par période : **3 / 6 / 12 mois**
-- Filtre par mois (toggle group)
-- Synchronisation automatique :
-  - KPI
-  - graphiques
-  - table des transactions
+### 🧱 Infra / DevOps
 
-### 📋 Transactions
-- Table Angular Material
-- Scroll interne
-- Header sticky
-- Icônes directionnelles (in / out)
-- Couleurs dynamiques selon le type
+* NAS Synology (auto-hébergement)
+* Docker (DB + services)
+* Reverse proxy (accès externe)
+* HTTPS
 
-### 📄 Export
-- Export PDF du dashboard
-- Rendu fidèle à l’écran (html2canvas + jsPDF)
+---
 
-## 🧠 Architecture
+## 🔐 Authentification
 
-- Angular **Standalone Components**
-- Gestion d’état centralisée via `DashboardDataService`
-- **RxJS** (`BehaviorSubject`, `combineLatest`)
-- Single Source of Truth
-- Composants UI “dumb”
-- Aucun `subscribe` manuel (async pipe uniquement)
+* Authentification via **JWT (JSON Web Token)**
+* Gestion sécurisée des sessions côté client
+* Protection des routes backend
+* Intercepteurs Angular pour injection automatique du token
 
-## 🛠️ Stack technique
+---
 
-- Angular (standalone)
-- Angular Material (MDC)
-- RxJS
-- Chart.js
-- html2canvas
-- jsPDF
-- SCSS (dark theme)
+## 📊 Fonctionnalités
 
-## ▶️ Lancer le projet
+* 🔑 Authentification utilisateur
+* 💼 Dashboard financier
+* 📈 Visualisation du solde et des transactions
+* 📊 Graphiques dynamiques (revenus / dépenses)
+* 🧾 Liste des transactions
+* 🎨 Thèmes dynamiques (light / dark + palettes custom)
+* ⚡ UI moderne type fintech
 
---->Bash
+---
+
+## 🌐 Intégration APIs externes
+
+Mise en place d’un **proxy backend** pour interroger des APIs externes :
+
+* 📉 Yahoo Finance
+* 💱 Binance
+
+### Pourquoi un proxy ?
+
+* Évite les problèmes de CORS
+* Sécurise les clés API
+* Centralise la logique backend
+
+---
+
+## 🎨 Theming
+
+Système de thème avancé basé sur :
+
+* Angular Material theming
+* Mixin SCSS custom
+* Injection dynamique des palettes
+
+👉 Permet :
+
+* plusieurs thèmes (ex: Indigo & Pink, Purple & Green…)
+* mode sombre / clair
+* cohérence design globale
+
+---
+
+## 🏗️ Architecture
+
+```bash
+Frontend (Angular)
+    ↓
+Backend (Spring Boot API REST)
+    ↓
+PostgreSQL (Docker)
+
++ Proxy backend → APIs externes (Binance / Yahoo)
+```
+
+---
+
+## ⚙️ Lancement du projet
+
+
+```bash
+cd frontend
 npm install
-ng serve
-Puis ouvrir dans le navigateur :
-👉 http://localhost:4200
+npm run dev
+```
 
-📌 Notes
-Les données sont mockées mais réalistes
-Le projet est conçu pour être facilement branché sur une API REST
-L’architecture privilégie la lisibilité et la maintenabilité
+---
 
-👤 Auteur
-Stéphane Evrard
-Développeur Angular / Fullstack
-📍 Annecy – Genève
+## 🔥 Points clés
+
+* Architecture **fullstack complète**
+* Projet **auto-hébergé en production**
+* Gestion du **theming avancé**
+* Intégration **APIs financières**
+* Approche **DevOps (NAS + Docker + proxy)**
+
+---
+
+## 📌 Roadmap
+
+* [ ] Gestion multi-comptes avancée
+* [ ] Catégorisation automatique des dépenses
+* [ ] Notifications
+* [ ] Export CSV / PDF
+* [ ] PWA / mobile
+
+---
+
+## 👨‍💻 Auteur
+
+**Stéphane Evrard**
+Développeur Fullstack (Angular / React / Node / Java)
+
