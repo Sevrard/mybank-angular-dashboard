@@ -1,6 +1,32 @@
 // src/styles/_forms.scss
 
-// Classe à appliquer sur la balise <form>
+
+.form-dense {
+
+  // Pour mat-form-field (select)
+  --mat-form-field-container-height: 40px;
+  --mat-form-field-container-vertical-padding: 6px;
+  .mat-mdc-text-field-wrapper {
+    height: 40px;
+  }
+
+  .mat-mdc-form-field-infix {
+    padding-top: 0;
+    padding-bottom: 0;
+    min-height: 40px;
+  }
+  // Pour mat-button-toggle-group
+  &.mat-button-toggle-group,
+  .mat-button-toggle-group {
+    height: 40px;
+  }
+  .mat-button-toggle-button {
+    height: 40px;
+    line-height: 40px;
+  }
+}
+
+
 .bank-form-container {
   display: flex;
   flex-direction: column;
@@ -11,15 +37,17 @@
     width: 100%;
   }
 
-  // Overrides Material pour le Dark Mode (ton style AddAccount)
   mat-form-field {
     width: 100%;
-    
+
     ::ng-deep {
       .mdc-text-field--outlined {
         background-color: rgba(255, 255, 255, 0.03) !important;
       }
-      .mdc-notched-outline__breadcrumb { color: rgba(255, 255, 255, 0.7); }
+
+      .mdc-notched-outline__breadcrumb {
+        color: rgba(255, 255, 255, 0.7);
+      }
     }
   }
 
@@ -30,7 +58,6 @@
     margin-top: -10px;
   }
 
-  // Barre d'actions en bas (Annuler / Confirmer)
   .form-actions {
     display: flex;
     justify-content: flex-end;
@@ -46,7 +73,10 @@
       border: none;
       cursor: pointer;
       font-weight: 500;
-      &:hover { text-decoration: underline; }
+
+      &:hover {
+        text-decoration: underline;
+      }
     }
 
     .btn-submit {

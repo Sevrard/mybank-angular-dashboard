@@ -1,38 +1,120 @@
-
 :host {
-  position: fixed;
+  display: block;
+  position: sticky;
   top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 10;
-  
+  z-index: 1000;
 }
 
-.companyName{
+.app-navbar {
+  background-color: var(--mat-card);
+  color: var(--mat-text);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid var(--mat-divider);
   display: flex;
-  margin-left: 1vw;
-  width: 10vw;
   align-items: center;
-  mat-icon {
+  padding: 0 20px;
+}
+
+.companyName {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: 500;
+  margin-right: 20px;
+  user-select: none;
+
+  .logo-icon {
     margin-right: 10px;
+    color: var(--mat-primary);
+  }
+
+  .brand-highlight {
+    color: var(--mat-primary);
+    font-weight: 700;
+  }
+
+  .brand-text {
+    color: var(--mat-text);
   }
 }
 
-.logoutBtn{
-  border: 1px solid #f78f83;
+.theme-trigger {
+  color: var(--mat-text-sec);
+
+  &:hover {
+    color: var(--mat-text);
+    background: var(--mat-accent-soft);
+  }
+}
+
+.menu-icon {
+  margin-right: 12px;
+  color: var(--mat-accent);
 }
 
 .spacer {
-  flex: 1 10 auto;
+  flex: 1 1 auto;
 }
 
-button.active {
-  border: 2px solid var(--bank-primary-light);
-}
-    
-.navbar {
-  background-color: var(--bank-primary);
+.nav-links {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+
+  @media (max-width: 850px) {
+    display: none;
+  }
+
+  a[mat-button] {
+    color: var(--mat-text-sec);
+    transition: all 0.2s;
+
+    &:hover {
+      color: var(--mat-text);
+      background-color: var(--mat-accent-soft);
+    }
+
+    &.active-link {
+      color: var(--mat-primary);
+      background-color: rgba(var(--mat-primary), 0.05);
+      border-bottom: 2px solid var(--mat-primary);
+      border-radius: 4px 4px 0 0;
+    }
+  }
+
+  .logout-btn {
+    margin-left: 15px;
+    border-color: var(--mat-warn);
+    color: var(--mat-warn);
+
+    &:hover {
+      background-color: rgba(244, 67, 54, 0.1);
+    }
+  }
+} 
+.theme-row {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  width: 100%;
+  min-width: 150px; 
 }
 
-.grid { display: flex; gap: 20px;}
+.color-bubbles {
+  display: flex;
+  margin-left: 15px; 
 
+  .bubble {
+    width: 14px; 
+    height: 14px; 
+    border-radius: 50%; 
+    border: 1px solid rgba(128, 128, 128, 0.3);
+    margin-left: -6px;
+
+    &:first-child {
+      margin-left: 0;
+      z-index: 1;
+    }
+  }
+}

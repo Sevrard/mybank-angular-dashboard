@@ -4,16 +4,16 @@ import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { DashboardFakeDataService } from '../../core/services/dashboard-fake-data.service';
-import { PolarChart } from '../../shared/components/polar-chart/polar-chart';
+import { PolarChart } from '../../shared/components/charts/polar-chart/polar-chart';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalContainer } from '../../shared/components/modal/modal';
 import { AccountService } from '../../core/services/account.service';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { PieChart } from '../../shared/components/charts/pie-chart/pie-chart';
 
 @Component({
   selector: 'app-accounts',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatIconModule, PolarChart],
+  imports: [CommonModule, MatCardModule, MatIconModule, PieChart],
   templateUrl: './accounts.html',
   styleUrls: ['./accounts.scss']
 })

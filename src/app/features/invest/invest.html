@@ -1,0 +1,72 @@
+<div class="investment-page">
+
+  <header class="investment-header">
+    <h1>Investments</h1>
+  </header>
+
+  <section class="metals-grid">
+    <div class="metal-card gold">
+      <h4>Gold (XAU)</h4>
+      <span class="price">4,953.05 €</span>
+      <span class="trend positive">+1.42%</span>
+    </div>
+
+    <div class="metal-card silver">
+      <h4>Silver (XAG)</h4>
+      <span class="price">22.18 €</span>
+      <span class="trend negative">-0.38%</span>
+    </div>
+
+    <div class="metal-card platinum">
+      <h4>Platinum (XPT)</h4>
+      <span class="price">912.40 €</span>
+      <span class="trend positive">+0.62%</span>
+    </div>
+
+    <div class="metal-card palladium">
+      <h4>Palladium (XPD)</h4>
+      <span class="price">1,024.90 €</span>
+      <span class="trend positive">+1.12%</span>
+    </div>
+  </section>
+
+  <section class="charts-grid">
+
+    <div class="chart-card">
+      <div class="chart-header">
+        <h3>Gold price</h3>
+        <div class="fake-actions">
+          <button>Line</button>
+          <button>Area</button>
+          <button>Candle</button>
+        </div>
+      </div>
+      <app-metal-chart metal="gold"></app-metal-chart>
+    </div>
+
+    <div class="chart-card">
+      <div class="chart-header">
+        <h3>Silver price</h3>
+        <div class="fake-actions">
+          <button>Line</button>
+          <button>Area</button>
+          <button>Candle</button>
+        </div>
+      </div>
+      <app-metal-chart metal="silver"></app-metal-chart>
+    </div>
+
+    <div class="chart-card">
+      <div class="chart-header">
+        <h3>Platinum price</h3>
+        <div class="fake-actions">
+          <button>Line</button>
+          <button>Area</button>
+          <button>Candle</button>
+        </div>
+      </div>
+      <app-metal-chart metal="platinum"></app-metal-chart>
+    </div>
+
+  </section>
+</div>

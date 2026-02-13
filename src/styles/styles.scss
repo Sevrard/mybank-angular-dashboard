@@ -1,78 +1,143 @@
 @use '@angular/material' as mat;
-@use './colors' as colors;
-@use './forms' as forms;
+@use 'sass:map'; 
+@use './palettes' as p;
+
 @include mat.core();
 
-/* =============================== ANGULAR MAT =============================== */
+// ==========================================================
+// 1. DÉFINITION DES THÈMES (Recettes)
+// ==========================================================
 
-mat-card-title {
-  margin: 10px 10px !important
-}
-mat-card {
-  padding: 1rem;
-  transition: transform 160ms ease, box-shadow 160ms ease;
-}
-mat-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--mat-sys-elevation-level4);
-}
-.custom-bank-modal {
-  .mat-mdc-dialog-container {
-    background-color: #1a1a1a !important; // Ton fond sombre
-    border-radius: 16px !important;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 0 !important;
-  }
+$dark-indigo-pink: mat.m2-define-dark-theme((
+  color: (
+    primary: mat.m2-define-palette(p.$indigo),
+    accent: mat.m2-define-palette(p.$pink),
+  )
+));
 
-  .mat-mdc-dialog-content {
-    color: #e0e0e0;
-    font-family: 'Inter', sans-serif;
-  }
+$dark-deeppurple-amber: mat.m2-define-dark-theme((
+  color: (
+    primary: mat.m2-define-palette(p.$deep-purple),
+    accent: mat.m2-define-palette(p.$amber),
+  )
+));
+
+$light-pink-bluegrey: mat.m2-define-light-theme((
+  color: (
+    primary: mat.m2-define-palette(p.$pink),
+    accent: mat.m2-define-palette(p.$blue-grey),
+  )
+));
+
+$light-purple-green: mat.m2-define-light-theme((
+  color: (
+    primary: mat.m2-define-palette(p.$purple),
+    accent: mat.m2-define-palette(p.$green),
+  )
+));
+
+// ==========================================================
+// 2. LE MIXIN (Le Générateur de Variables)
+// ==========================================================
+
+@mixin extract-theme-colors($theme) {
+  // Extraction des palettes Material
+  $primary: map.get($theme, primary);
+  $accent:  map.get($theme, accent);
+  $warn:    map.get($theme, warn);
+  $background: map.get($theme, background);
+  $foreground: map.get($theme, foreground);
+
+  // Création des variables CSS
+  --mat-primary: #{mat.m2-get-color-from-palette($primary)};
+  --mat-accent:  #{mat.m2-get-color-from-palette($accent)};
+  --mat-warn:    #{mat.m2-get-color-from-palette($warn)};
+  --mat-valid:   #4de87c; 
+  --mat-text:     #{mat.m2-get-color-from-palette($foreground, text)};
+  --mat-text-sec: #{mat.m2-get-color-from-palette($foreground, secondary-text)};
+  --mat-divider:  #{mat.m2-get-color-from-palette($foreground, divider)};
+  --mat-bg:       #{mat.m2-get-color-from-palette($background, background)};
+  --mat-card:     #{mat.m2-get-color-from-palette($background, card)};
+  --mat-accent-soft: #{rgba(mat.m2-get-color-from-palette($accent), 0.15)};
 }
 
-/* =============================== APP =============================== */
+// ==========================================================
+// 3. APPLICATION DES THÈMES & SURCHARGES
+// ==========================================================
 
-html {
+.theme-indigo-pink {
+  @include mat.all-component-themes($dark-indigo-pink);
+  @include extract-theme-colors($dark-indigo-pink);
+  --mat-bg: #121212; 
+  --mat-card: #1e1e1e;
+}
+
+.theme-deeppurple-amber {
+  @include mat.all-component-themes($dark-deeppurple-amber);
+  @include extract-theme-colors($dark-deeppurple-amber);
+  --mat-bg: #121212; 
+  --mat-card: #1e1e1e;
+}
+
+.theme-pink-bluegrey {
+  @include mat.all-component-themes($light-pink-bluegrey);
+  @include extract-theme-colors($light-pink-bluegrey);
+  --mat-bg: #f5f5f5;
+  --mat-card: #ffffff;
+}
+
+.theme-purple-green {
+  @include mat.all-component-themes($light-purple-green);
+  @include extract-theme-colors($light-purple-green);
+  --mat-bg: #f5f5f5;
+  --mat-card: #ffffff;
+}
+
+// ==========================================================
+// 4. STYLES GLOBAUX & RESET
+// ==========================================================
+
+html, body {
   height: 100%;
-  @include mat.theme((
-    color: (
-      primary: mat.$cyan-palette,
-      tertiary: mat.$orange-palette,
-    ),
-    typography: Roboto,
-    density: 0,
-  ));
 }
 
 body {
-  color-scheme: dark;
-  background-color: var(--mat-sys-surface);
-  color: var(--mat-sys-on-surface);
-  font: var(--mat-sys-body-medium);
   margin: 0;
-  height: 100%;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: var(--mat-bg);
+  color: var(--mat-text);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+.mat-mdc-card {
+  background-color: var(--mat-card) !important;
+  color: var(--mat-text);
+}
 
-/* =============================== SHARED =============================== */
+// ==========================================================
+// 5. CLASSES UTILITAIRES PARTAGÉES
+// ==========================================================
 
 .twoRow {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
-.chartHeader{
+
+.chartHeader {
   display: grid;
   grid-template-columns: 6fr 2fr;
   gap: 20px;
 }
-.periodeFilterToogle{
+
+.periodeFilterToogle {
   width: 172px;
   height: 40px;
   margin-top: 20px;
 }
+
 .textLight {
-  color: var(--text-light);
+  color: var(--mat-text);
 }
 
 .twoColumn {
@@ -80,6 +145,7 @@ body {
   grid-template-columns: 3fr 2fr;
   gap: 20px;
 }
+
 @media (max-width: 900px) {
   .twoColumn {
     grid-template-columns: 1fr;
