@@ -1,6 +1,6 @@
 # 💰 MyBank
 
-![Angular](https://img.shields.io/badge/Angular-17-red)
+![Angular](https://img.shields.io/badge/Angular-21-red)
 ![Spring Boot](https://img.shields.io/badge/SpringBoot-API-green)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Docker-blue)
 ![JWT](https://img.shields.io/badge/Auth-JWT-orange)
@@ -126,7 +126,8 @@ npm run dev
 * [ ] Gestion multi-comptes avancée
 * [ ] Catégorisation automatique des dépenses
 * [ ] Notifications
-* [ ] Export CSV / PDF
+* [x] Export PDF (dashboard)
+* [ ] Export CSV
 * [ ] PWA / mobile
 
 

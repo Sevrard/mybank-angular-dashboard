@@ -14,6 +14,8 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 28px;
+  flex-wrap: wrap;
+  gap: 16px;
 
   h1 {
     font-size: 24px;
@@ -21,7 +23,15 @@
     color: var(--mat-text);
   }
 
-  .timeframes {
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .timeframes,
+  .chart-types {
     display: flex;
     gap: 8px;
 
@@ -37,14 +47,14 @@
 
       &.active {
         background: var(--mat-accent);
-        color: var(--mat-bg); 
+        color: var(--mat-bg);
         border-color: transparent;
       }
 
       &:hover:not(.active) {
         border-color: var(--mat-accent);
         color: var(--mat-accent);
-        background: var(--mat-accent-soft); 
+        background: var(--mat-accent-soft);
       }
     }
   }
@@ -77,6 +87,10 @@
     color: var(--mat-text);
     display: block;
     margin-bottom: 6px;
+
+    &.loading {
+      opacity: 0.6;
+    }
   }
 
   .trend {
@@ -107,35 +121,12 @@
 }
 
 .chart-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   margin-bottom: 14px;
 
   h3 {
     font-size: 16px;
     font-weight: 500;
     color: var(--mat-text);
-  }
-
-  .fake-actions {
-    display: flex;
-    gap: 6px;
-
-    button {
-      padding: 4px 12px;
-      font-size: 12px;
-      border-radius: 8px;
-      background: transparent;
-      border: 1px solid var(--mat-divider);
-      color: var(--mat-text-sec);
-      cursor: default;
-
-      &:hover {
-        border-color: var(--mat-accent);
-        color: var(--mat-accent);
-      }
-    }
   }
 }
 

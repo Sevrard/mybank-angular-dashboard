@@ -1,8 +1,8 @@
 import { Component, AfterViewInit, ViewChild, ElementRef, OnDestroy, Input, OnChanges, inject, effect } from '@angular/core';
-import { Chart, PolarAreaController, ArcElement, Tooltip, Legend, RadialLinearScale } from 'chart.js';
+import { Chart, PieController, ArcElement, Tooltip, Legend } from 'chart.js';
 import { ThemeService } from '../../../../core/services/theme.service';
 
-Chart.register(PolarAreaController, ArcElement, Tooltip, Legend, RadialLinearScale);
+Chart.register(PieController, ArcElement, Tooltip, Legend);
 
 @Component({
   selector: 'app-pie-chart',
@@ -63,18 +63,19 @@ export class PieChart implements AfterViewInit, OnDestroy, OnChanges {
     const textColor = this.getCssVar('--mat-text-sec', '#8b8e94');
     const cardColor = this.getCssVar('--mat-card', '#121817');
     const gridColor = this.getCssVar('--mat-divider', 'rgba(255,255,255,0.05)');
+    // gridColor used for tooltip border only (pie has no radial scale)
 
     this.chart = new Chart(this.canvas.nativeElement, {
-      type: 'polarArea', 
+      type: 'pie',
       data: {
         labels: this.labels,
         datasets: [{
           data: this.data,
           backgroundColor: [
-            'rgba(45, 212, 191, 0.7)', // Teal
-            'rgba(167, 139, 250, 0.7)', // Violet
-            'rgba(251, 113, 133, 0.7)', // Rose
-            'rgba(251, 191, 36, 0.7)',  // Amber
+            'rgba(45, 212, 191, 0.7)',   // Teal
+            'rgba(167, 139, 250, 0.7)',  // Violet
+            'rgba(251, 113, 133, 0.7)',  // Rose
+            'rgba(251, 191, 36, 0.7)',   // Amber
             'rgba(56, 189, 248, 0.7)',  // Sky
             'rgba(129, 140, 248, 0.7)'  // Indigo
           ],
@@ -85,14 +86,6 @@ export class PieChart implements AfterViewInit, OnDestroy, OnChanges {
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        scales: {
-          r: {
-            display: true,
-            grid: { color: gridColor },
-            ticks: { display: false },
-            angleLines: { color: gridColor }
-          }
-        },
         plugins: {
           legend: {
             position: 'right',
@@ -127,18 +120,10 @@ export class PieChart implements AfterViewInit, OnDestroy, OnChanges {
     if (!this.chart) return;
     const textColor = this.getCssVar('--mat-text-sec', '#8b8e94');
     const cardColor = this.getCssVar('--mat-card', '#121817');
-    const gridColor = this.getCssVar('--mat-divider', 'rgba(255,255,255,0.05)');
 
     if (this.chart.options.plugins?.legend?.labels) {
       this.chart.options.plugins.legend.labels.color = textColor;
     }
-    
-    if (this.chart.options.scales?.['r']) {
-      const rScale = this.chart.options.scales['r'] as any;
-      rScale.grid.color = gridColor;
-      rScale.angleLines.color = gridColor;
-    }
-
     this.chart.data.datasets[0].borderColor = cardColor;
     this.chart.update();
   }

@@ -1,4 +1,4 @@
-import { Injectable, signal, computed } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, tap, throwError } from 'rxjs';
 import { Router } from '@angular/router';
@@ -43,7 +43,7 @@ export class AuthService {
     getToken(): string | null {
         return localStorage.getItem(this.TOKEN_KEY);
     }
-     isAuthenticated(){
-        return this.isAuth;
+    isAuthenticated(): boolean {
+        return this.isAuth();
     }
 }
