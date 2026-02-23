@@ -2,32 +2,57 @@
 
   <header class="investment-header">
     <h1>Investments</h1>
+    <div class="header-actions">
+      <div class="timeframes">
+        @for (tf of timeframes; track tf) {
+          <button
+            type="button"
+            [class.active]="activeTf === tf"
+            (click)="setTimeframe(tf)">
+            {{ tf }}
+          </button>
+        }
+      </div>
+      <div class="chart-types">
+        <button
+          type="button"
+          [class.active]="activeChartType === 'line'"
+          (click)="setChartType('line')">
+          Line
+        </button>
+        <button
+          type="button"
+          [class.active]="activeChartType === 'area'"
+          (click)="setChartType('area')">
+          Area
+        </button>
+        <button
+          type="button"
+          [class.active]="activeChartType === 'candle'"
+          (click)="setChartType('candle')">
+          Candle
+        </button>
+      </div>
+    </div>
   </header>
 
   <section class="metals-grid">
-    <div class="metal-card gold">
-      <h4>Gold (XAU)</h4>
-      <span class="price">4,953.05 €</span>
-      <span class="trend positive">+1.42%</span>
-    </div>
-
-    <div class="metal-card silver">
-      <h4>Silver (XAG)</h4>
-      <span class="price">22.18 €</span>
-      <span class="trend negative">-0.38%</span>
-    </div>
-
-    <div class="metal-card platinum">
-      <h4>Platinum (XPT)</h4>
-      <span class="price">912.40 €</span>
-      <span class="trend positive">+0.62%</span>
-    </div>
-
-    <div class="metal-card palladium">
-      <h4>Palladium (XPD)</h4>
-      <span class="price">1,024.90 €</span>
-      <span class="trend positive">+1.12%</span>
-    </div>
+    @for (m of metals; track m.id) {
+      <div class="metal-card" [class]="m.id">
+        <h4>{{ m.name }} ({{ m.symbol }})</h4>
+        @if (loading && !m.quote) {
+          <span class="price loading">—</span>
+          <span class="trend">—</span>
+        } @else {
+          <span class="price">{{ formatPrice(m.quote) }}</span>
+          @if (formatTrend(m.quote); as trend) {
+            <span class="trend" [class.positive]="isTrendPositive(m.quote)" [class.negative]="!isTrendPositive(m.quote)">{{ trend }}</span>
+          } @else {
+            <span class="trend">—</span>
+          }
+        }
+      </div>
+    }
   </section>
 
   <section class="charts-grid">
@@ -35,37 +60,37 @@
     <div class="chart-card">
       <div class="chart-header">
         <h3>Gold price</h3>
-        <div class="fake-actions">
-          <button>Line</button>
-          <button>Area</button>
-          <button>Candle</button>
-        </div>
       </div>
-      <app-metal-chart metal="gold"></app-metal-chart>
+      <app-metal-chart
+        metal="gold"
+        [timeframe]="activeTf"
+        [chartType]="activeChartType"
+        (quoteChange)="onQuote('gold', $event)">
+      </app-metal-chart>
     </div>
 
     <div class="chart-card">
       <div class="chart-header">
         <h3>Silver price</h3>
-        <div class="fake-actions">
-          <button>Line</button>
-          <button>Area</button>
-          <button>Candle</button>
-        </div>
       </div>
-      <app-metal-chart metal="silver"></app-metal-chart>
+      <app-metal-chart
+        metal="silver"
+        [timeframe]="activeTf"
+        [chartType]="activeChartType"
+        (quoteChange)="onQuote('silver', $event)">
+      </app-metal-chart>
     </div>
 
     <div class="chart-card">
       <div class="chart-header">
         <h3>Platinum price</h3>
-        <div class="fake-actions">
-          <button>Line</button>
-          <button>Area</button>
-          <button>Candle</button>
-        </div>
       </div>
-      <app-metal-chart metal="platinum"></app-metal-chart>
+      <app-metal-chart
+        metal="platinum"
+        [timeframe]="activeTf"
+        [chartType]="activeChartType"
+        (quoteChange)="onQuote('platinum', $event)">
+      </app-metal-chart>
     </div>
 
   </section>
