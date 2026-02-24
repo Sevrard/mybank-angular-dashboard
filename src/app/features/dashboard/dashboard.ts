@@ -17,31 +17,29 @@ import { DashboardFakeDataService } from '../../core/services/dashboard-fake-dat
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.OnPush, 
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     MatCardModule,
     MatTableModule,
     MatButtonToggleModule,
     MatIconModule,
-    LineChart,
-    BarChart,
     MatFormFieldModule,
     MatSelectModule,
     periodFilter,
-    MonthFilter
+    MonthFilter,
+    LineChart,
+    BarChart,
   ],
   templateUrl: './dashboard.html',
-  styleUrls: ['./dashboard.scss']
+  styleUrls: ['./dashboard.scss'],
 })
 export class Dashboard {
-
   @ViewChild('pdfContent') pdfContent!: ElementRef;
 
   displayedColumns = ['type', 'from', 'amount', 'date'];
 
-  constructor(public data: DashboardFakeDataService) { }
-
+  constructor(public data: DashboardFakeDataService) {}
 
   exportPdf() {
     const element = this.pdfContent.nativeElement;

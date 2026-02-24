@@ -38,19 +38,91 @@
 
   <section class="metals-grid">
     @for (m of metals; track m.id) {
-      <div class="metal-card" [class]="m.id">
+      <div class="metal-card" [class]="m.id" [class.has-analysis]="true">
         <h4>{{ m.name }} ({{ m.symbol }})</h4>
         @if (loading && !m.quote) {
           <span class="price loading">—</span>
-          <span class="trend">—</span>
+          <span class="trend-line"><span class="trend">—</span></span>
         } @else {
           <span class="price">{{ formatPrice(m.quote) }}</span>
-          @if (formatTrend(m.quote); as trend) {
-            <span class="trend" [class.positive]="isTrendPositive(m.quote)" [class.negative]="!isTrendPositive(m.quote)">{{ trend }}</span>
-          } @else {
-            <span class="trend">—</span>
-          }
+          <span class="trend-line">
+            @if (formatTrend(m.quote); as trend) {
+              <span class="trend" [class.positive]="isTrendPositive(m.quote)" [class.negative]="!isTrendPositive(m.quote)">{{ trend }}</span>
+            } @else {
+              <span class="trend">—</span>
+            }
+            @if (getPrediction(m.id); as pred) {
+              <div class="bias-block" [class.bullish]="pred.combinedBias === 'bullish'" [class.bearish]="pred.combinedBias === 'bearish'" [class.neutral]="pred.combinedBias === 'neutral'">
+                <span class="bias-value">{{ biasLabel(pred.combinedBias) }}</span>
+                <span class="bias-score-inline score-with-tooltip" [attr.title]="getBiasTooltip(m.id)">
+                  {{ pred.weightedScore }}
+                  <span class="score-tooltip" aria-hidden="true">{{ getBiasTooltip(m.id) }}</span>
+                </span>
+              </div>
+            }
+          </span>
         }
+
+        <div class="metal-card-analysis">
+          @if (analysisLoading) {
+            <p class="analysis-loading">Analyse…</p>
+          } @else if (getPrediction(m.id); as pred) {
+            <button type="button" class="toggle-detail" (click)="toggleAnalysis(m.id)" [attr.aria-expanded]="isAnalysisExpanded(m.id)">
+              {{ isAnalysisExpanded(m.id) ? 'Masquer' : 'Voir' }} le détail (passé + présent)
+            </button>
+            @if (isAnalysisExpanded(m.id) && getAnalysis(m.id); as analysis) {
+              <div class="analysis-detail">
+                <div class="detail-grid">
+                  <section class="detail-panel detail-past" aria-labelledby="past-heading">
+                    <h4 id="past-heading" class="detail-panel-title">Le passé</h4>
+                    <p class="detail-panel-desc">Série temporelle (historique des prix)</p>
+                    @if (analysis.past) {
+                      <dl class="analysis-dl">
+                        <div class="analysis-dl-row">
+                          <dt>Tendance</dt>
+                          <dd [class.positive]="analysis.past.trend === 'Hausse'" [class.negative]="analysis.past.trend === 'Baisse'">{{ analysis.past.trend }}</dd>
+                        </div>
+                        <div class="analysis-dl-row">
+                          <dt>Force</dt>
+                          <dd>{{ analysis.past.strength_pct }} %</dd>
+                        </div>
+                        <div class="analysis-dl-row">
+                          <dt>Phase</dt>
+                          <dd>{{ analysis.past.phase }}</dd>
+                        </div>
+                        <div class="analysis-dl-row">
+                          <dt>MA court / long</dt>
+                          <dd>{{ analysis.past.ma_short | number:'1.2-2' }} / {{ analysis.past.ma_long | number:'1.2-2' }}</dd>
+                        </div>
+                      </dl>
+                    } @else {
+                      <p class="analysis-empty">Pas assez de données pour l’analyse (il faut au moins 10 points en 1M).</p>
+                    }
+                  </section>
+                  <section class="detail-panel detail-present" aria-labelledby="present-heading">
+                    <h4 id="present-heading" class="detail-panel-title">Le présent</h4>
+                    <p class="detail-panel-desc">Signaux exogènes (USD, Fed, inflation)</p>
+                    <ul class="exo-list">
+                      @for (s of analysis.present; track s.name) {
+                        <li class="exo-item" [class.bullish]="s.impact === 'bullish'" [class.bearish]="s.impact === 'bearish'">
+                          <span class="exo-impact">{{ impactIcon(s) }}</span>
+                          <span class="exo-label">{{ s.label }}</span>
+                          <span class="exo-value">{{ s.value }}{{ s.unit }}</span>
+                          <span class="exo-desc">{{ s.description }}</span>
+                        </li>
+                      }
+                    </ul>
+                  </section>
+                </div>
+                <p class="weights-hint">Biais combiné et détail calculés côté backend.</p>
+              </div>
+            }
+          } @else if (analysisError) {
+            <p class="analysis-empty">Erreur de chargement (vérifier que le backend tourne et que l’API /api/market/bias répond).</p>
+          } @else if (getAnalysis(m.id) === null && !analysisLoading) {
+            <p class="analysis-empty">Pas assez de données pour l’analyse (il faut au moins 10 points en 1M).</p>
+          }
+        </div>
       </div>
     }
   </section>
@@ -93,5 +165,250 @@
       </app-metal-chart>
     </div>
 
+  </section>
+
+  <section class="invest-bot-section">
+    <mat-card class="bot-panel">
+      <div class="card-header">
+        <h3>Auto-Trading Bot</h3>
+      </div>
+
+      <div class="bot-controls">
+        <mat-form-field appearance="outline" class="capital-field">
+          <mat-label>Capital à allouer (€)</mat-label>
+          <input matInput type="number" [(ngModel)]="capitalAllocate" min="1" step="100" />
+        </mat-form-field>
+        @if (bot.isRunning()) {
+          <button mat-flat-button color="warn" class="bot-action-btn stop-btn" (click)="stopBot()">
+            Arrêter
+          </button>
+        } @else {
+          <button mat-flat-button class="bot-action-btn start-btn" (click)="startBot()">
+            Démarrer le Bot
+          </button>
+        }
+      </div>
+
+      @if (bot.isRunning() && (configMetalsLabel() || bot.config()?.leverage || bot.config()?.lots != null)) {
+        <p class="bot-metals-readonly">
+          @if (configMetalsLabel()) { Métaux tradés : {{ configMetalsLabel() }}. }
+          @if (bot.config()?.leverage) { {{ formatLeverageLabel(bot.config()!.leverage!) }} }
+          @if (bot.config()?.lots != null) { · {{ formatLotsLabel(bot.config()!.lots) }} }
+        </p>
+      }
+      @if (!bot.isRunning()) {
+        <div class="bot-metals-select" role="group" aria-label="Métaux à trader">
+          <span class="bot-metals-label">Métaux à trader (optionnel)</span>
+          @for (m of availableMetals; track m) {
+            <mat-checkbox [checked]="isMetalSelected(m)" (change)="toggleMetal(m)">
+              {{ metalLabel(m) }}
+            </mat-checkbox>
+          }
+          <span class="bot-metals-hint">Si aucun n’est coché, le bot utilise la config serveur.</span>
+        </div>
+        <div class="bot-leverage-lots">
+          <mat-form-field appearance="outline" class="leverage-field">
+            <mat-label>Levier</mat-label>
+            <mat-select [(ngModel)]="selectedLeverage">
+              @for (lev of leverageOptions; track lev) {
+                <mat-option [value]="lev">{{ formatLeverageLabel(lev) }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="lots-field">
+            <mat-label>Lots (optionnel)</mat-label>
+            <mat-select [(ngModel)]="selectedLots">
+              @for (opt of lotsOptions; track opt ?? 'none') {
+                <mat-option [value]="opt">{{ opt == null ? 'Aucun' : formatLotsLabel(opt) }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </div>
+      }
+
+      @if (bot.error()) {
+        <p class="bot-error">{{ bot.error() }}</p>
+      }
+
+      @if (bot.activePositions().length > 0) {
+        @for (pos of bot.activePositions(); track pos.id) {
+          <div class="position-active">
+            <h4 class="position-title">
+              <span class="position-metal-badge">{{ metalLabel(pos.metal) }}</span>
+              @if (pos.leverage) {
+                <span class="position-leverage">{{ formatLeverageLabel(pos.leverage) }}</span>
+              }
+              @if (pos.lots != null) {
+                <span class="position-lots">{{ formatLotsLabel(pos.lots) }}</span>
+              }
+            </h4>
+            <div class="position-grid">
+              <div class="position-item">
+                <span class="position-label">Montant investi</span>
+                <span class="position-value">{{ pos.investedAmount | number:'1.2-2' }} €</span>
+              </div>
+              <div class="position-item">
+                <span class="position-label">Prix d'entrée</span>
+                <span class="position-value">{{ pos.entryPrice | number:'1.2-2' }}</span>
+              </div>
+              @if (pos.openDate) {
+                <div class="position-item">
+                  <span class="position-label">Ouverture</span>
+                  <span class="position-value position-date">{{ pos.openDate | date:'short' }}</span>
+                </div>
+              }
+              @if (pos.currentPriceUsdt != null) {
+                <div class="position-item">
+                  <span class="position-label">Prix (USDT)</span>
+                  <span class="position-value">{{ pos.currentPriceUsdt | number:'1.2-2' }}</span>
+                </div>
+              }
+              <div class="position-item pnl-cell">
+                <span class="position-label">Profit / Perte</span>
+                <span class="position-value pnl-value" [class.pnl-positive]="(getDisplayedPnlForOpen(pos) ?? 0) > 0" [class.pnl-negative]="(getDisplayedPnlForOpen(pos) ?? 0) < 0">
+                  <span class="pnl-eur">{{ getDisplayedPnlLabelForOpen(pos) }}</span>
+                  <span class="pnl-pct">{{ getDisplayedPnlPctLabelForOpen(pos) }}</span>
+                </span>
+              </div>
+            </div>
+            @if (bot.config()?.takeProfitMinEur != null) {
+              <p class="position-rule">Vente si gain net ≥ {{ bot.config()!.takeProfitMinEur | number:'1.0-0' }} €</p>
+            }
+            <div class="position-actions">
+              <button
+                type="button"
+                mat-flat-button
+                color="warn"
+                class="sell-btn"
+                [disabled]="sellingPositionId === pos.id"
+                (click)="sellPosition(pos)">
+                {{ sellingPositionId === pos.id ? 'Vente…' : 'Vendre la position' }}
+              </button>
+            </div>
+          </div>
+        }
+        <div class="bot-thresholds">
+            <button type="button" class="thresholds-toggle" (click)="toggleConfig()" [attr.aria-expanded]="configExpanded">
+              <span>Règles appliquées</span>
+              <span class="thresholds-chevron" [class.expanded]="configExpanded">▼</span>
+            </button>
+            @if (configExpanded) {
+              <div class="thresholds-body">
+                @if (bot.config(); as cfg) {
+                  <ul class="thresholds-list">
+                    <li>Take profit : <span class="threshold-value positive">{{ formatBotPct(cfg.takeProfitPct, 'plus') }} %</span></li>
+                    @if (cfg.takeProfitMinEur != null) {
+                      <li>Profit min (vente auto) : <span class="threshold-value positive">{{ cfg.takeProfitMinEur | number:'1.0-0' }} €</span> (PnL net du spread ≥ ce montant + durée min)</li>
+                    }
+                    <li>Stop loss : <span class="threshold-value negative">{{ formatBotPct(cfg.stopLossPct, 'minus') }} %</span></li>
+                    <li>Trailing : activé à <span class="threshold-value">{{ formatBotPct(cfg.trailingActivationPct, 'plus') }} %</span>, vente si <span class="threshold-value">{{ formatBotPct(cfg.trailingDropPct) }} %</span> sous le pic</li>
+                    <li>Spread : <span class="threshold-value">{{ formatBotPct(cfg.spreadPct) }} %</span> déduit du PnL</li>
+                    <li>Durée min : {{ cfg.minHoldMinutes }} min</li>
+                    <li>Cooldown : {{ cfg.cooldownMinutes }} min</li>
+                    @if (cfg.leverage) {
+                      <li>Levier : {{ formatLeverageLabel(cfg.leverage) }}</li>
+                    }
+                    @if (cfg.lots != null) {
+                      <li>Lots : {{ formatLotsLabel(cfg.lots) }}</li>
+                    }
+                    @if (cfg.metals?.length) {
+                      <li>Métaux : {{ configMetalsLabel() }}</li>
+                    }
+                  </ul>
+                @if (bot.activePositions().length > 0) {
+                  <div class="thresholds-prices">
+                    @for (pos of bot.activePositions(); track pos.id) {
+                      <div class="thresholds-prices-metal">
+                        <p class="thresholds-metal-label">{{ metalLabel(pos.metal) }}</p>
+                        <p><span class="threshold-label">Prix d'arrêt (stop) :</span> <span class="threshold-value negative">{{ stopPrice(pos.entryPrice, cfg) | number:'1.2-2' }}</span></p>
+                        <p><span class="threshold-label">Prix profit (take profit) :</span> <span class="threshold-value positive">{{ takeProfitPrice(pos.entryPrice, cfg) | number:'1.2-2' }}</span></p>
+                      </div>
+                    }
+                  </div>
+                }
+                  <p class="thresholds-meta">Durée min en position : {{ cfg.minHoldMinutes }} min · Cooldown après vente : {{ cfg.cooldownMinutes }} min</p>
+                } @else {
+                  <p class="thresholds-missing">Seuils non reçus. Le backend doit renvoyer l’objet <code>config</code> dans GET /api/bot/status (takeProfitPct, stopLossPct, etc.).</p>
+                }
+              </div>
+            }
+        </div>
+      } @else if (bot.config(); as cfg) {
+        <div class="position-waiting-wrap">
+          <p class="position-waiting">Aucune position ouverte. Seuils : {{ configSummary(cfg) }}</p>
+          <div class="bot-thresholds">
+            <button type="button" class="thresholds-toggle" (click)="toggleConfig()" [attr.aria-expanded]="configExpanded">
+              <span>Configurations du bot</span>
+              <span class="thresholds-chevron" [class.expanded]="configExpanded">▼</span>
+            </button>
+            @if (configExpanded) {
+              <div class="thresholds-body">
+                <ul class="thresholds-list">
+                  <li>Take profit : <span class="threshold-value positive">{{ formatBotPct(cfg.takeProfitPct, 'plus') }} %</span></li>
+                  @if (cfg.takeProfitMinEur != null) {
+                    <li>Profit min (vente auto) : <span class="threshold-value positive">{{ cfg.takeProfitMinEur | number:'1.0-0' }} €</span> (PnL net du spread ≥ ce montant + durée min)</li>
+                  }
+                  <li>Stop loss : <span class="threshold-value negative">{{ formatBotPct(cfg.stopLossPct, 'minus') }} %</span></li>
+                  <li>Trailing : activé à <span class="threshold-value">{{ formatBotPct(cfg.trailingActivationPct, 'plus') }} %</span>, vente si <span class="threshold-value">{{ formatBotPct(cfg.trailingDropPct) }} %</span> sous le pic</li>
+                  <li>Spread : <span class="threshold-value">{{ formatBotPct(cfg.spreadPct) }} %</span> déduit du PnL</li>
+                  <li>Durée min : {{ cfg.minHoldMinutes }} min</li>
+                  <li>Cooldown : {{ cfg.cooldownMinutes }} min</li>
+                  @if (cfg.leverage) {
+                    <li>Levier : {{ formatLeverageLabel(cfg.leverage) }}</li>
+                  }
+                  @if (cfg.lots != null) {
+                    <li>Lots : {{ formatLotsLabel(cfg.lots) }}</li>
+                  }
+                  @if (cfg.metals?.length) {
+                    <li>Métaux : {{ configMetalsLabel() }}</li>
+                  }
+                </ul>
+                <p class="thresholds-meta">Durée min en position : {{ cfg.minHoldMinutes }} min · Cooldown après vente : {{ cfg.cooldownMinutes }} min</p>
+              </div>
+            }
+          </div>
+        </div>
+      }
+
+      <div class="bot-history">
+        <h4 class="history-title">Historique (toutes les positions fermées)</h4>
+        @if (bot.displayedClosedTrades().length === 0) {
+          <p class="history-empty">Aucun trade fermé.</p>
+        } @else {
+          <div class="history-table-wrap">
+            <table class="history-table">
+              <thead>
+                <tr>
+                  <th>Métal</th>
+                  <th>Clôture</th>
+                  <th>Investi</th>
+                  <th>Entrée</th>
+                  <th>Sortie</th>
+                  <th>Levier</th>
+                  <th>Lots</th>
+                  <th>PNL</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (t of bot.displayedClosedTrades(); track t.id) {
+                  <tr>
+                    <td><span class="metal-badge">{{ metalLabel(t.metal ?? 'gold') }}</span></td>
+                    <td>{{ t.closeDate | date:'short' }}</td>
+                    <td>{{ t.investedAmount | number:'1.2-2' }} €</td>
+                    <td>{{ t.entryPrice | number:'1.2-2' }}</td>
+                    <td>{{ t.exitPrice | number:'1.2-2' }}</td>
+                    <td>{{ t.leverage ? formatLeverageLabel(t.leverage) : '—' }}</td>
+                    <td>{{ formatLotsLabel(t.lots) }}</td>
+                    <td class="pnl-cell" [class.pnl-positive]="t.realizedPnl >= 0" [class.pnl-negative]="t.realizedPnl < 0">
+                      {{ t.realizedPnl >= 0 ? '+' : '' }}{{ t.realizedPnl | number:'1.2-2' }} €
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        }
+      </div>
+    </mat-card>
   </section>
 </div>
