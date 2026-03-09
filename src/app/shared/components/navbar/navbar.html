@@ -48,8 +48,11 @@
     </button>
     }
     @else {
+    <button mat-stroked-button (click)="loginDemo()" class="demo-btn">
+      Compte démo
+    </button>
     <a mat-button routerLink="/login" routerLinkActive="active-link">Login</a>
-    <a mat-raised-button color="accent" routerLink="/signin">Inscription</a>
+    <a mat-stroked-button color="accent" routerLink="/signin">Inscription</a>
     }
   </div>
 
