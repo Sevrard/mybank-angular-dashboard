@@ -62,18 +62,26 @@
         <div class="card-header">
           <h3>Évolution du solde</h3>
         </div>
-        <div class="chart-wrapper">
-          <app-line-chart [transactions]="data.filteredTransactions()"></app-line-chart>
-        </div>
+        @defer (on viewport) {
+          <div class="chart-wrapper">
+            <app-line-chart [transactions]="data.filteredTransactions()"></app-line-chart>
+          </div>
+        } @placeholder {
+          <div class="chart-wrapper chart-placeholder">Chargement du graphique…</div>
+        }
       </mat-card>
 
       <mat-card class="content-card">
         <div class="card-header">
           <h3>Flux de trésorerie (Dépenses / Recettes)</h3>
         </div>
-        <div class="chart-wrapper">
-          <app-bart-chart [data]="data.filteredCashFlow()"></app-bart-chart>
-        </div>
+        @defer (on viewport) {
+          <div class="chart-wrapper">
+            <app-bart-chart [data]="data.filteredCashFlow()"></app-bart-chart>
+          </div>
+        } @placeholder {
+          <div class="chart-wrapper chart-placeholder">Chargement du graphique…</div>
+        }
       </mat-card>
     </div>
 

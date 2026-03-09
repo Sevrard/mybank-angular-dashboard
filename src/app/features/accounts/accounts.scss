@@ -117,6 +117,22 @@
   padding-left: 60px;
   height: 200px;
   @media (max-width:1150px) { display: none; }
+
+  .chart-placeholder {
+    height: 100%;
+    min-height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--mat-text-sec);
+    font-size: 14px;
+    background: radial-gradient(
+      circle at center,
+      var(--mat-accent-soft),
+      transparent 75%
+    );
+    border-radius: 8px;
+  }
   
   .section-label {
     display: block;

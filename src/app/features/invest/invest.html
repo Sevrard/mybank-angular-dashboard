@@ -61,36 +61,48 @@
       <div class="chart-header">
         <h3>Gold price</h3>
       </div>
-      <app-metal-chart
-        metal="gold"
-        [timeframe]="activeTf"
-        [chartType]="activeChartType"
-        (quoteChange)="onQuote('gold', $event)">
-      </app-metal-chart>
+      @defer (on viewport) {
+        <app-metal-chart
+          metal="gold"
+          [timeframe]="activeTf"
+          [chartType]="activeChartType"
+          (quoteChange)="onQuote('gold', $event)">
+        </app-metal-chart>
+      } @placeholder {
+        <div class="chart-placeholder">Chargement du graphique…</div>
+      }
     </div>
 
     <div class="chart-card">
       <div class="chart-header">
         <h3>Silver price</h3>
       </div>
-      <app-metal-chart
-        metal="silver"
-        [timeframe]="activeTf"
-        [chartType]="activeChartType"
-        (quoteChange)="onQuote('silver', $event)">
-      </app-metal-chart>
+      @defer (on viewport) {
+        <app-metal-chart
+          metal="silver"
+          [timeframe]="activeTf"
+          [chartType]="activeChartType"
+          (quoteChange)="onQuote('silver', $event)">
+        </app-metal-chart>
+      } @placeholder {
+        <div class="chart-placeholder">Chargement du graphique…</div>
+      }
     </div>
 
     <div class="chart-card">
       <div class="chart-header">
         <h3>Platinum price</h3>
       </div>
-      <app-metal-chart
-        metal="platinum"
-        [timeframe]="activeTf"
-        [chartType]="activeChartType"
-        (quoteChange)="onQuote('platinum', $event)">
-      </app-metal-chart>
+      @defer (on viewport) {
+        <app-metal-chart
+          metal="platinum"
+          [timeframe]="activeTf"
+          [chartType]="activeChartType"
+          (quoteChange)="onQuote('platinum', $event)">
+        </app-metal-chart>
+      } @placeholder {
+        <div class="chart-placeholder">Chargement du graphique…</div>
+      }
     </div>
 
   </section>

@@ -60,9 +60,12 @@
         </div>
 
         <div class="chart-column">
-          <app-pie-chart [labels]="polarData().labels" [data]="polarData().values">
-          </app-pie-chart>
-          
+          @defer (on viewport) {
+            <app-pie-chart [labels]="polarData().labels" [data]="polarData().values">
+            </app-pie-chart>
+          } @placeholder {
+            <div class="chart-placeholder">Chargement…</div>
+          }
         </div>
 
       </div>
