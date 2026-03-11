@@ -92,6 +92,21 @@
       background-color: rgba(244, 67, 54, 0.1);
     }
   }
+
+  .demo-btn {
+    border: 2px solid transparent;
+    background:
+      linear-gradient(var(--mat-card), var(--mat-card)) padding-box,
+      linear-gradient(to right, var(--mat-primary), var(--mat-accent)) border-box;
+    color: var(--mat-primary);
+
+    &:hover {
+      background:
+        linear-gradient(var(--mat-accent-soft), var(--mat-accent-soft)) padding-box,
+        linear-gradient(to right, var(--mat-primary), var(--mat-accent)) border-box;
+      color: #000;
+    }
+  }
 } 
 .theme-row {
   display: flex;

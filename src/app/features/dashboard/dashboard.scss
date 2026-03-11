@@ -179,6 +179,21 @@
       position: relative;
       width: 100%;
     }
+
+    .chart-placeholder {
+      height: 280px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--mat-text-sec);
+      font-size: 14px;
+      background: radial-gradient(
+        circle at top,
+        var(--mat-accent-soft),
+        transparent 75%
+      );
+      border-radius: 8px;
+    }
   }
 }
 
